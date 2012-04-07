@@ -17,5 +17,7 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
     @Test
     void canUploadImage() {
         Assert.assertNotNull(template);
+        String google = template.getForEntity("http://vmware.com/mobile", String.class).getBody();
+        Assert.assertTrue(google.toLowerCase().contains("horizon"));
     }
 }
