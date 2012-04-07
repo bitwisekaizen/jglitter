@@ -34,7 +34,7 @@
   <!-- Deploys the 'accounts' dispatcher servlet whose configuration resides in /WEB-INF/accounts-servlet-config.xml -->
   <!---->
   <servlet>
-    <servlet-name>lbtest</servlet-name>
+    <servlet-name>harvard</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
     <init-param>
       <param-name>contextConfigLocation</param-name>
@@ -45,8 +45,8 @@
 
   <!-- Maps all /accounts URLs to the 'lbtest' servlet -->
   <servlet-mapping>
-    <servlet-name>lbtest</servlet-name>
-    <url-pattern>/lbtest/*</url-pattern>
+    <servlet-name>harvard</servlet-name>
+    <url-pattern>/iat/*</url-pattern>
   </servlet-mapping>
 
   <!--<filter>

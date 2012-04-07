@@ -1,5 +1,6 @@
 package lbtest;
 
+import lbtest.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -16,8 +17,8 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     @Test
     void canUploadImage() {
-        Assert.assertNotNull(template);
-        String google = template.getForEntity("http://vmware.com/mobile", String.class).getBody();
-        Assert.assertTrue(google.toLowerCase().contains("horizon"));
+        Images images = template.getForEntity("http://localhost:8080/lbtest/iat/images", Images.class).getBody();
+        Assert.assertNotNull(images);
+        Assert.assertEquals(images.getImages().size(), 0);
     }
 }

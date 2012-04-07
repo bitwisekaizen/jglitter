@@ -9,26 +9,23 @@
 
     <context:component-scan base-package="lbtest" />
 
+    <import resource="classpath:jaxb-config.xml" />
     <!--
         Maps incoming requests to the appropriate controller based on
         the annotations on the controller methods.
     -->
-    <!--<bean
-            class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
-    <bean id="handlerAdapter"
-          class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+    <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
         <property name="messageConverters">
             <list>
-                <bean
-                        class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+                <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
                     <property name="unmarshaller" ref="jaxbMarshaller" />
                 </bean>
             </list>
         </property>
-    </bean>
+    </bean>-->
 
-    <bean
-            class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="mediaTypes">
             <map>
                 <entry key="xml" value="application/xml" />
@@ -36,19 +33,11 @@
         </property>
         <property name="defaultViews">
             <list>
-                <bean
-                        class="org.springframework.web.servlet.view.xml.MarshallingView">
+                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
                     <constructor-arg ref="jaxbMarshaller" />
                 </bean>
             </list>
         </property>
         <property name="favorParameter" value="true" />
     </bean>
-
-    <bean id="harvardController" class="harvard.web.HarvardController"/>
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>-->
 </beans>
