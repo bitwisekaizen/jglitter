@@ -1,16 +1,16 @@
---- 
-applications: 
-  target/: 
-    name: lbtest
+---
+applications:
+  target/:
+    name: harvard
     url: ${name}.${target-base}
-    framework: 
+    framework:
       name: java_web
-      info: 
+      info:
         mem: 512M
         description: Java Web Application
-        exec: 
+        exec:
     mem: 512M
     instances: 1
-    services: 
-      lbtest-mysql: 
+    services:
+      harvard-mysql:
         type: mysql

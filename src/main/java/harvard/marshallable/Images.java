@@ -1,4 +1,4 @@
-package lbtest.marshallable;
+package harvard.marshallable;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;

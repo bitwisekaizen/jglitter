@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>co.gavin</groupId>
-    <artifactId>lbtest</artifactId>
-    <name>lbtest</name>
+    <artifactId>harvard</artifactId>
+    <name>harvard</name>
     <packaging>war</packaging>
     <version>1.0.0-BUILD-SNAPSHOT</version>
 
@@ -65,6 +65,6 @@
     </dependencies>
 
     <build>
-        <finalName>lbtest</finalName>
+        <finalName>harvard</finalName>
     </build>
 </project>

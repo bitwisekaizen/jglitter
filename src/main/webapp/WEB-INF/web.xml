@@ -43,7 +43,7 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-  <!-- Maps all /accounts URLs to the 'lbtest' servlet -->
+  <!-- Maps all /accounts URLs to the 'harvard' servlet -->
   <servlet-mapping>
     <servlet-name>harvard</servlet-name>
     <url-pattern>/iat/*</url-pattern>

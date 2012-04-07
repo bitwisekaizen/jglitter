@@ -1,6 +1,6 @@
-package lbtest;
+package harvard;
 
-import lbtest.marshallable.Images;
+import harvard.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -17,7 +17,7 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     @Test
     void canUploadImage() {
-        Images images = template.getForEntity("http://localhost:8080/lbtest/iat/images", Images.class).getBody();
+        Images images = template.getForEntity("http://localhost:8080/harvard/iat/images", Images.class).getBody();
         Assert.assertNotNull(images);
         Assert.assertEquals(images.getImages().size(), 0);
     }
