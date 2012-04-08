@@ -16,4 +16,8 @@ public class Images {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
+    public void addImage(Image image) {
+        images.add(image);
+    }
 }
