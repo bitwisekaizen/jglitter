@@ -20,6 +20,8 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private RestTemplate template;
+    //private static final String ROOT_URL = "http://localhost:8080/harvard";
+    private static final String ROOT_URL = "http://jsidlab-stage.cloudfoundry.com";
 
     @Test
     void canUploadImage() throws IOException {
@@ -42,7 +44,7 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
     }
 
     public String getImagesUrl() {
-        return "http://localhost:8080/harvard/iat" + ImagesController.IMAGES_MAPPING;
+        return ROOT_URL + "/iat" + ImagesController.IMAGES_MAPPING;
     }
 
     public Images getAllImages() {
