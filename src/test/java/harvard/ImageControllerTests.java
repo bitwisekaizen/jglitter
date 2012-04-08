@@ -1,6 +1,7 @@
 package harvard;
 
 import harvard.marshallable.Image;
+import harvard.marshallable.ImageContent;
 import harvard.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,16 +33,31 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
         Assert.assertNotNull(images);
         int originalCount = images.getImages().size();
 
-        Image uploadedImage = uploadImage();
+        ClassPathResource testResource = new ClassPathResource("test-image.jpg");
+        File testImage = testResource.getFile();
+        Image uploadedImage = uploadImage(testResource);
         Assert.assertNotNull(uploadedImage);
 
         images = getAllImages();
         Assert.assertEquals(images.getImages().size(), originalCount + 1);
 
+        byte[] imageContent = getImageContent(uploadedImage.getUuid()).getContent();
+        Assert.assertEquals(imageContent.length, testImage.length());
+
         deleteImage(uploadedImage);
         images = getAllImages();
 
         Assert.assertEquals(images.getImages().size(), originalCount);
+    }
+
+    private ImageContent getImageContent(String uuid) {
+        Map<String, String> requestParams = new HashMap<String, String>();
+        requestParams.put("uuid", uuid);
+        return template.getForEntity(getImagesContentUrl() + "?uuid={uuid}", ImageContent.class, requestParams).getBody();
+    }
+
+    private String getImagesContentUrl() {
+        return getServletUrl() + ImagesController.IMAGES_CONTENT_MAPPING;
     }
 
     private void deleteImage(Image image) {
@@ -49,18 +66,22 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
         template.delete(getImagesUrl() + "?uuid={uuid}", requestParams);
     }
 
-    private Image uploadImage() throws IOException {
+    private Image uploadImage(ClassPathResource image) throws IOException {
         MultiValueMap<String, Object> requestParams = new LinkedMultiValueMap<String, Object>();
-        requestParams.add("file", new ClassPathResource("test-image.jpg"));
+        requestParams.add("file", image);
 
         return template.postForEntity(getImagesUrl(), requestParams, Image.class).getBody();
     }
 
     public String getImagesUrl() {
-        return ROOT_URL + "/iat" + ImagesController.IMAGES_MAPPING;
+        return getServletUrl() + ImagesController.IMAGES_MAPPING;
     }
 
     public Images getAllImages() {
         return template.getForEntity(getImagesUrl(), Images.class).getBody();
+    }
+
+    public String getServletUrl() {
+        return ROOT_URL + "/iat";
     }
 }
