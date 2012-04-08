@@ -5,11 +5,17 @@ import javax.persistence.*;
 /**
  */
 @Entity
-@Table(name = "images")
+@Table(name = Image.TABLE_NAME)
 public class Image {
+
+    public static final String TABLE_NAME = "images";
+    public static final String UUID_COLUMN_NAME = "uuid";
+
     private Long id;
     private String uuid;
     private ImageContent imageContent;
+
+    public Image() { }
 
     @Id
     @GeneratedValue
@@ -31,8 +37,7 @@ public class Image {
         this.uuid = uuid;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "image")
     public ImageContent getImageContent() {
         return imageContent;
     }

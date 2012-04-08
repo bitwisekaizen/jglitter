@@ -15,7 +15,11 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="harvard.persistable" />
+        <property name="packagesToScan">
+            <list>
+                <value>harvard.persistable</value>
+            </list>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
@@ -27,8 +31,6 @@
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <!--<tx:annotation-driven/>-->
 
     <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
         <property name="dataSource" ref="dataSource" />

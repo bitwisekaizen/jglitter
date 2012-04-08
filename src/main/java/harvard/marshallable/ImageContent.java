@@ -11,6 +11,12 @@ public class ImageContent {
 
     private byte[] content;
 
+    public ImageContent() { }
+
+    public ImageContent(byte[] content) {
+        this.content = content;
+    }
+
     public void setContent(byte[] content) {
         this.content = content;
     }

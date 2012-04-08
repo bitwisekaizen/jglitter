@@ -27,4 +27,10 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="4-widen-uuid-column" author="gavin">
+        <modifyDataType tableName="images" columnName="uuid" newDataType="VARCHAR(256)" />
+    </changeSet>
+    <changeSet id="5-widen-content-column" author="gavin">
+        <modifyDataType tableName="image_contents" columnName="content" newDataType="LONGBLOB" />
+    </changeSet>
 </databaseChangeLog>

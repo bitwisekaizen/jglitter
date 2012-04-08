@@ -9,6 +9,15 @@ public class Images {
 
     private List<Image> images = new ArrayList<Image>();
 
+    public Images() { }
+
+    public Images(List<harvard.persistable.Image> dbImages) {
+        images.clear();
+        for (harvard.persistable.Image dbImage : dbImages) {
+            images.add(new Image(dbImage.getUuid()));
+        }
+    }
+
     public List<Image> getImages() {
         return images;
     }
