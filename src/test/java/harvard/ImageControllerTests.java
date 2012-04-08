@@ -13,6 +13,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Test
 @ContextConfiguration(value = "classpath:test-context.xml")
@@ -20,20 +22,31 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private RestTemplate template;
-    //private static final String ROOT_URL = "http://localhost:8080/harvard";
-    private static final String ROOT_URL = "http://jsidlab-stage.cloudfoundry.com";
+    private static final String ROOT_URL = "http://localhost:8080/harvard";
+    //private static final String ROOT_URL = "http://jsidlab-stage.cloudfoundry.com";
 
     @Test
     void canUploadImage() throws IOException {
         Images images = getAllImages();
         Assert.assertNotNull(images);
-        Assert.assertEquals(images.getImages().size(), 0);
+        int originalCount = images.getImages().size();
 
         Image uploadedImage = uploadImage();
         Assert.assertNotNull(uploadedImage);
 
         images = getAllImages();
-        Assert.assertEquals(images.getImages().size(), 1);
+        Assert.assertEquals(images.getImages().size(), originalCount + 1);
+
+        deleteImage(uploadedImage);
+        images = getAllImages();
+
+        Assert.assertEquals(images.getImages().size(), originalCount);
+    }
+
+    private void deleteImage(Image image) {
+        Map<String, String> requestParams = new HashMap<String, String>();
+        requestParams.put("uuid", image.getUuid());
+        template.delete(getImagesUrl() + "?uuid={uuid}", requestParams);
     }
 
     private Image uploadImage() throws IOException {
