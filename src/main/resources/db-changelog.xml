@@ -9,4 +9,22 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="2-create-images-table" author="gavin">
+        <renameTable oldTableName="stimuli" newTableName="images" />
+        <addColumn tableName="images">
+            <column name="uuid" type="VARCHAR(32)">
+                <constraints unique="true" nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="3-create-image-contents-table" author="gavin">
+        <createTable tableName="image_contents">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="content" type="BLOB">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>
