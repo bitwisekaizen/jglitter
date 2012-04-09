@@ -1,4 +1,4 @@
-package harvard.hibernate.builder;
+package com.thegrayfiles.hqlbuilder;
 
 import org.hibernate.Session;
 

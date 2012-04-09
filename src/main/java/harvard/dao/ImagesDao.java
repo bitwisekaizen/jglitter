@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
-import static harvard.hibernate.builder.HQLBuilder.hql;
-import static harvard.hibernate.builder.HQLConditionFactory.isEqual;
+import static com.thegrayfiles.hqlbuilder.HQLBuilder.hql;
+import static com.thegrayfiles.hqlbuilder.HQLConditionFactory.isEqual;
 
 /**
  *
