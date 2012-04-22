@@ -12,6 +12,13 @@
 
         <property name="messageConverters">
             <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>image/jpeg</value>
+                        </list>
+                    </property>
+                </bean>
                 <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
                     <property name="marshaller" ref="jaxbMarshaller"/>
                     <property name="unmarshaller" ref="jaxbMarshaller"/>

@@ -19,16 +19,24 @@
         Maps incoming requests to the appropriate controller based on
         the annotations on the controller methods.
     -->
-    <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
     <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="order" value="1" />
         <property name="messageConverters">
             <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>image/jpeg</value>
+                        </list>
+                    </property>
+                </bean>
                 <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
                     <property name="unmarshaller" ref="jaxbMarshaller" />
                 </bean>
             </list>
         </property>
-    </bean>-->
+    </bean>
+
     <context:component-scan base-package="harvard.service" />
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -44,6 +52,7 @@
             <map>
                 <entry key="xml" value="application/xml" />
                 <entry key="html" value="text/html"/>
+                <entry key="jpeg" value="image/jpeg" />
             </map>
         </property>
         <property name="viewResolvers">
@@ -62,7 +71,7 @@
                 </bean>
             </list>
         </property>
-                <property name="favorParameter" value="true" />
+        <property name="favorParameter" value="true" />
     </bean>
 
     <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

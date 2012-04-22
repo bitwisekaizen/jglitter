@@ -1,7 +1,6 @@
 package harvard;
 
 import harvard.marshallable.Image;
-import harvard.marshallable.ImageContent;
 import harvard.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -41,7 +40,7 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
         images = getAllImages();
         Assert.assertEquals(images.getImages().size(), originalCount + 1);
 
-        byte[] imageContent = getImageContent(uploadedImage.getUuid()).getContent();
+        byte[] imageContent = getImageContent(uploadedImage.getUuid());
         Assert.assertEquals(imageContent.length, testImage.length());
 
         deleteImage(uploadedImage);
@@ -50,10 +49,10 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
         Assert.assertEquals(images.getImages().size(), originalCount);
     }
 
-    private ImageContent getImageContent(String uuid) {
+    private byte[] getImageContent(String uuid) {
         Map<String, String> requestParams = new HashMap<String, String>();
         requestParams.put("uuid", uuid);
-        return template.getForEntity(getImagesContentUrl() + "?uuid={uuid}", ImageContent.class, requestParams).getBody();
+        return template.getForEntity(getImagesContentUrl() + "?uuid={uuid}", byte[].class, requestParams).getBody();
     }
 
     private String getImagesContentUrl() {

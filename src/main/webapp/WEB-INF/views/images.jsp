@@ -20,20 +20,8 @@
     }
     $("#imageUploadForm").ajaxForm(options);
 
-    function loadImage(uuid)
-    {
-        $("#image").html('loading image...');
-        $.ajax({
-            type: "GET",
-            url: "images/content",
-            data: "uuid=" + uuid,
-            success: function(response){
-                $("#image").html(response);
-            },
-            headers: {
-                Accept:"application/xml"
-            }
-        });
+    function loadImage(uuid) {
+        $('#image').attr('src', "images/content?uuid=" + uuid);
     }
 </script>
 <div id="percentComplete" />
@@ -49,10 +37,11 @@
         </tr>
     </table>
 </form>
+
 <!-- Links to all of the images -->
 <c:forEach var="image" items="${images.images}">
-<a href="javascript:loadImage('${image.uuid}')">Image - ${image.uuid}</a>
+<a href="javascript:loadImage('${image.uuid}')">Image - ${image.uuid}</a><br/>
 </c:forEach>
-<div id="images" />
+<img id="image" />
 </body>
 </html>
