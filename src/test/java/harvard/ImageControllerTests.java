@@ -4,8 +4,6 @@ import harvard.marshallable.Image;
 import harvard.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -18,14 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Test
-@ContextConfiguration(value = "classpath:test-context.xml")
-public class ImageControllerTests extends AbstractTestNGSpringContextTests {
+public class ImageControllerTests extends AbstractTests {
 
     @Autowired
     private RestTemplate template;
-
-    @Autowired
-    private UrlHelper urls;
 
     @Test
     void canUploadImage() throws IOException {
