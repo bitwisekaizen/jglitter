@@ -44,10 +44,11 @@ public class ImagesDao {
         return image;
     }
 
-    public void deleteImage(String uuid) {
+    public Image deleteImage(String uuid) {
         Session session = factory.getCurrentSession();
         Image image = getImageByUuid(session, uuid);
         session.delete(image);
+        return image;
     }
 
     public byte[] getImageContent(String uuid) {

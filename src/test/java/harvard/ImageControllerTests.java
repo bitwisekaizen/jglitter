@@ -62,7 +62,7 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
     private void deleteImage(Image image) {
         Map<String, String> requestParams = new HashMap<String, String>();
         requestParams.put("uuid", image.getUuid());
-        template.delete(getImagesUrl() + "?uuid={uuid}", requestParams);
+        template.postForEntity(getDeleteImagesUrl() + "?uuid={uuid}", null, Image.class, requestParams);
     }
 
     private Image uploadImage(ClassPathResource image) throws IOException {
@@ -74,6 +74,10 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     public String getImagesUrl() {
         return getServletUrl() + ImagesController.IMAGES_MAPPING;
+    }
+
+    public String getDeleteImagesUrl() {
+        return getServletUrl() + ImagesController.IMAGES_DELETE_MAPPING;
     }
 
     public Images getAllImages() {

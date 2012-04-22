@@ -26,8 +26,8 @@ public class ImagesService {
         return new Image(imagesDao.addImage(bytes));
     }
 
-    public void removeImage(String uuid) {
-        imagesDao.deleteImage(uuid);
+    public Image removeImage(String uuid) {
+        return new Image(imagesDao.deleteImage(uuid));
     }
 
     @Transactional(readOnly = true)
