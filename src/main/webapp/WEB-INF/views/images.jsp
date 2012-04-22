@@ -16,7 +16,7 @@
         url:        'images',
         success:    showResponse,
         error: function() {
-            $("#percentComplete").append("error");
+
         }
     };
     function showResponse(responseText, statusText, xhr, $form)  {
@@ -33,33 +33,39 @@
     });
 
 
+        $(function() {
+            $( "input:submit" ).button();
+            $( "#removeButton" ).click(function() {
+                alert('lcicked!')
+            });
+        });
+
     function loadImage(uuid) {
         $('#image').attr('src', "images/content?uuid=" + uuid);
     }
     })
 </script>
-<div id="percentComplete" />
+<div class="ui-widget">
 <form id="imageUploadForm" action="images" enctype="multipart/form-data">
-    <table>
-        <tr>
-            <td><input type="file" name="file" /></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Submit" />
-            </td>
-        </tr>
-    </table>
+    Upload New Image:
+    <input type="file" name="file" /><br/>
+    <input type="submit" value="Upload" />
 </form>
+</div>
 
 <!-- Links to all of the images -->
+<div class="ui-widget">
 Select Image: <select id="imageSelect">
 <c:forEach var="image" items="${images.images}">
     <option value="${image.uuid}">${image.uuid}</option>
 </c:forEach>
 </select>
+<input type="submit" id="removeButton" value="Delete Image" />
+</div>
+
+
 <br/>
-<div id=""/>
+
 <img id="image" />
 </body>
 </html>
