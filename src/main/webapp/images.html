@@ -1,0 +1,77 @@
+<html>
+<head>
+
+</head>
+<body>
+<link type="text/css" href="jquery/css/smoothness/jquery-ui-1.8.19.custom.css" rel="Stylesheet" />
+<script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="jquery/js/jquery-ui-1.8.19.custom.min.js"></script>
+<script type="text/javascript" src="jquery/js/jquery-form-3.09.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        updateImages();
+
+        var options = {
+            target:     '#uploadResult',
+            url:        'iat/images',
+            success:    function() {
+                //alert('moo');
+                updateImages();
+            },
+            error: function() {
+
+            }
+        };
+
+        function updateImages() {
+            $.get('iat/images', function(data) {
+                $("#imageSelect option").remove();
+                $('image', data).each(function() {
+                    var uuid = $(this).find("uuid").text();
+                    $("#imageSelect").append($('<option value="' + uuid + '">' + uuid + '</option>'));
+                });
+            }, "xml");
+        }
+
+        $("#imageUploadForm").ajaxForm(options);
+
+        // change listener for the image selector
+        $("#imageSelect").change(function() {
+            var selected = $("#imageSelect option:selected");
+            if (selected.val() != 0) {
+                loadImage(selected.val());
+            }
+        });
+
+
+        $(function() {
+            $( "input:submit" ).button();
+            $( "#removeButton" ).click(function() {
+                $.post('iat/images/delete', {uuid: $("#imageSelect option:selected").val()}, function() {
+                    updateImages();
+                }, "xml")
+            });
+        });
+
+        function loadImage(uuid) {
+            $('#image').attr('src', "iat/images/content?uuid=" + uuid);
+        }
+    })
+</script>
+<div id="uploadResult" />
+<form id="imageUploadForm" action="iat/images" class="ui-widget">
+    Upload New Image:
+    <input type="file" name="file" /><br/>
+    <input type="submit" value="Upload" />
+</form>
+
+
+<!-- Links to all of the images -->
+<div class="ui-widget">
+    Select Image: <select id="imageSelect"></select>
+    <input type="submit" id="removeButton" value="Delete Image" />
+</div>
+<br/>
+<img id="image" />
+</body>
+</html>

@@ -1,5 +1,6 @@
 package harvard.marshallable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Images {
         }
     }
 
+    @XmlElement(name = "image")
     public List<Image> getImages() {
         return images;
     }
