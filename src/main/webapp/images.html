@@ -46,7 +46,10 @@
             var selected = $("#imageSelect option:selected");
             if (selected.val()) {
                 loadImage(selected.val());
+            } else {
+                $('#image').remove();
             }
+
         }
 
 
