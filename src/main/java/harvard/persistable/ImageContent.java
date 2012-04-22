@@ -37,7 +37,7 @@ public class ImageContent {
         this.id = id;
     }
 
-    @OneToOne
+    @ManyToOne
     @MapsId
     @JoinColumn(name = "id")
     public Image getImage() {

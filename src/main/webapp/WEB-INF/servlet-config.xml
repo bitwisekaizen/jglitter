@@ -46,6 +46,15 @@
                 <entry key="html" value="text/html"/>
             </map>
         </property>
+        <property name="viewResolvers">
+            <list>
+                <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+                    <property name="prefix" value="/WEB-INF/views/"/>
+                    <property name="suffix" value=".jsp"/>
+                </bean>
+            </list>
+        </property>
         <property name="defaultViews">
             <list>
                 <bean class="org.springframework.web.servlet.view.xml.MarshallingView">

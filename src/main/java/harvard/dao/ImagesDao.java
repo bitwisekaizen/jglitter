@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ public class ImagesDao {
         ImageContent content = new ImageContent();
         Image image = new Image();
         // associate relationship first...
-        image.setImageContent(content);
+        image.setImageContents(Arrays.asList(content));
         content.setImage(image);
         // ...then set other properties.
         image.setUuid(UUID.randomUUID().toString());
@@ -51,7 +52,7 @@ public class ImagesDao {
 
     public byte[] getImageContent(String uuid) {
         Session session = factory.getCurrentSession();
-        Blob blob = getImageByUuid(session, uuid).getImageContent().getContent();
+        Blob blob = getImageByUuid(session, uuid).getImageContents().get(0).getContent();
         try {
             return blob.getBytes(1, (int) blob.length());
         } catch (SQLException e) {

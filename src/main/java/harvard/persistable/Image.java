@@ -1,6 +1,7 @@
 package harvard.persistable;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  */
@@ -13,7 +14,8 @@ public class Image {
 
     private Long id;
     private String uuid;
-    private ImageContent imageContent;
+    /** Necessary for lazy fetching. */
+    private List<ImageContent> imageContents;
 
     public Image() { }
 
@@ -37,12 +39,12 @@ public class Image {
         this.uuid = uuid;
     }
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "image")
-    public ImageContent getImageContent() {
-        return imageContent;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "image")
+    public List<ImageContent> getImageContents() {
+        return imageContents;
     }
 
-    public void setImageContent(ImageContent imageContent) {
-        this.imageContent = imageContent;
+    public void setImageContents(List<ImageContent> imageContents) {
+        this.imageContents = imageContents;
     }
 }
