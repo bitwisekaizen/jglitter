@@ -11,6 +11,7 @@
     $(document).ready(function() {
         updateImages();
 
+
         var options = {
             target:     '#uploadResult',
             url:        'iat/images',
@@ -30,6 +31,7 @@
                     var uuid = $(this).find("uuid").text();
                     $("#imageSelect").append($('<option value="' + uuid + '">' + uuid + '</option>'));
                 });
+                loadSelectedImage();
             }, "xml");
         }
 
@@ -37,11 +39,15 @@
 
         // change listener for the image selector
         $("#imageSelect").change(function() {
+            loadSelectedImage();
+        });
+
+        function loadSelectedImage() {
             var selected = $("#imageSelect option:selected");
-            if (selected.val() != 0) {
+            if (selected.val()) {
                 loadImage(selected.val());
             }
-        });
+        }
 
 
         $(function() {
