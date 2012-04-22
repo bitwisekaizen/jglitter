@@ -23,8 +23,9 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private RestTemplate template;
-    private static final String ROOT_URL = "http://localhost:8080/harvard";
-    //private static final String ROOT_URL = "http://jsidlab-stage.cloudfoundry.com";
+
+    @Autowired
+    private UrlHelper urls;
 
     @Test
     void canUploadImage() throws IOException {
@@ -52,39 +53,26 @@ public class ImageControllerTests extends AbstractTestNGSpringContextTests {
     private byte[] getImageContent(String uuid) {
         Map<String, String> requestParams = new HashMap<String, String>();
         requestParams.put("uuid", uuid);
-        return template.getForEntity(getImagesContentUrl() + "?uuid={uuid}", byte[].class, requestParams).getBody();
+        return template.getForEntity(urls.getImagesContentUrl() + "?uuid={uuid}", byte[].class, requestParams).getBody();
     }
 
-    private String getImagesContentUrl() {
-        return getServletUrl() + ImagesController.IMAGES_CONTENT_MAPPING;
-    }
 
     private void deleteImage(Image image) {
         Map<String, String> requestParams = new HashMap<String, String>();
         requestParams.put("uuid", image.getUuid());
-        template.postForEntity(getDeleteImagesUrl() + "?uuid={uuid}", null, Image.class, requestParams);
+        template.postForEntity(urls.getDeleteImagesUrl() + "?uuid={uuid}", null, Image.class, requestParams);
     }
 
     private Image uploadImage(ClassPathResource image) throws IOException {
         MultiValueMap<String, Object> requestParams = new LinkedMultiValueMap<String, Object>();
         requestParams.add("file", image);
 
-        return template.postForEntity(getImagesUrl(), requestParams, Image.class).getBody();
+        return template.postForEntity(urls.getImagesUrl(), requestParams, Image.class).getBody();
     }
 
-    public String getImagesUrl() {
-        return getServletUrl() + ImagesController.IMAGES_MAPPING;
-    }
-
-    public String getDeleteImagesUrl() {
-        return getServletUrl() + ImagesController.IMAGES_DELETE_MAPPING;
-    }
 
     public Images getAllImages() {
-        return template.getForEntity(getImagesUrl(), Images.class).getBody();
+        return template.getForEntity(urls.getImagesUrl(), Images.class).getBody();
     }
 
-    public String getServletUrl() {
-        return ROOT_URL + "/iat";
-    }
 }
