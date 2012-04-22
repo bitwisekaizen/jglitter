@@ -36,7 +36,9 @@
         $(function() {
             $( "input:submit" ).button();
             $( "#removeButton" ).click(function() {
-                alert('lcicked!')
+                $.post('images/delete', {uuid: $("#imageSelect option:selected").val()}, function() {
+                    alert('deleted!');
+                }, "xml")
             });
         });
 
