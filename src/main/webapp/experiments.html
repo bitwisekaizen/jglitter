@@ -18,9 +18,22 @@
             $("#experimentList option[value*='" + value + "']").remove();
         });
         $("#addBlockButton").click(function() {
-
+            var newBlockNum = $("#blockAccordion div").size() + 1;
+            $("#blockAccordion").accordion("destroy");
+            $("#blockAccordion").append(
+                            '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> \
+                            <span class="ui-icon ui-icon-triangle-1-s"/> \
+                            <a href="#">Block ' + newBlockNum + '</a></h3> \
+                            <div class="ui-widget ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"> \
+                            Upper Left Label: <input id="block-' + newBlockNum + '-upperLeftLabel" type="text" /> \
+                            Lower Left Label: <input id="block-' + newBlockNum + '-lowerLeftLabel" type="text" /> \
+                            <br/> \
+                            Upper Right Label: <input id="block-' + newBlockNum + '-upperRightLabel" type="text" /> \
+                            Lower Right Label: <input id="block-' + newBlockNum + '-lowerRightLabel" type="text" /> \
+                            </div>');
+            $("#blockAccordion").accordion();
         });
-        $("#blockAccordion").accordion();
+
     })
 </script>
 <div class="ui-widget">
@@ -32,11 +45,6 @@
 <div class="ui-widget">
     Select Experiment: <select id="experimentList"></select><input id="updateButton" type="submit" value="Update" /><input id="deleteButton" type="submit" value="Remove Experiment" /><input id="addBlockButton" type="submit" value="+ Block" />
 </div>
-<div id="blockAccordion">
-    <h3><a href="#">Block 1</a></h3>
-    <div class="ui-widget">
-        Upper Left Label: <input id="block-1-upperLeftLabel" type="text" />Upper Right Label: <input id="block-1-upperRightLabel" type="text" /><br/>
-        Lower Left Label: <input id="block-1-lowerLeftLabel" type="text" />Lower Right Label: <input id="block-1-lowerRightLabel" type="text" /><br/>
-    </div>
+<div id="blockAccordion" />
 </body>
 </html>

@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static org.testng.Assert.assertEquals;
+
 @Test
 public class ViewTests extends AbstractTests {
 
@@ -37,13 +39,13 @@ public class ViewTests extends AbstractTests {
     @Test
     void canNavigateToImagesPage() {
         imagesPage.go();
-        Assert.assertEquals(imagesPage.getTitle(), "Images");
+        assertEquals(imagesPage.getTitle(), "Images");
     }
 
     @Test
     void canNavigateToExperimentsPage() {
         experimentPage.go();
-        Assert.assertEquals(experimentPage.getTitle(), "Experiments");
+        assertEquals(experimentPage.getTitle(), "Experiments");
     }
 
     @Test
@@ -59,14 +61,15 @@ public class ViewTests extends AbstractTests {
     @Test
     void canAddBlockToExperiment() {
         canCreateNewExperiment();
+        assertEquals(experimentPage.getBlocks().size(), 0, "Before block is created, experiment should have one block.");
         experimentPage.addBlock();
         List<ExperimentBlock> blocks = experimentPage.getBlocks();
-        Assert.assertEquals(blocks.size(),  1, "Experiment should have exactly one block.");
+        assertEquals(blocks.size(), 1, "Experiment should have exactly one block.");
         ExperimentBlock block = blocks.get(0);
-        Assert.assertEquals(block.getUpperLeftLabel(), "");
-        Assert.assertEquals(block.getLowerLeftLabel(), "");
-        Assert.assertEquals(block.getUpperRightLabel(), "");
-        Assert.assertEquals(block.getLowerRightLabel(), "");
+        assertEquals(block.getUpperLeftLabel(), "");
+        assertEquals(block.getLowerLeftLabel(), "");
+        assertEquals(block.getUpperRightLabel(), "");
+        assertEquals(block.getLowerRightLabel(), "");
     }
 
 }
