@@ -1,5 +1,6 @@
 package harvard;
 
+import harvard.pages.ExperimentBlock;
 import harvard.pages.ExperimentPage;
 import harvard.pages.ImagesPage;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.util.List;
 
 @Test
 public class ViewTests extends AbstractTests {
@@ -51,6 +54,19 @@ public class ViewTests extends AbstractTests {
         experimentPage.selectExperiment(experimentName);
         experimentPage.deleteExperiment(experimentName);
         Assert.assertFalse(experimentPage.containsExperiment(experimentName), "Experiment in list after delete.");
+    }
+
+    @Test
+    void canAddBlockToExperiment() {
+        canCreateNewExperiment();
+        experimentPage.addBlock();
+        List<ExperimentBlock> blocks = experimentPage.getBlocks();
+        Assert.assertEquals(blocks.size(),  1, "Experiment should have exactly one block.");
+        ExperimentBlock block = blocks.get(0);
+        Assert.assertEquals(block.getUpperLeftLabel(), "");
+        Assert.assertEquals(block.getLowerLeftLabel(), "");
+        Assert.assertEquals(block.getUpperRightLabel(), "");
+        Assert.assertEquals(block.getLowerRightLabel(), "");
     }
 
 }

@@ -17,6 +17,10 @@
             var value = $("#experimentList option:selected").val();
             $("#experimentList option[value*='" + value + "']").remove();
         });
+        $("#addBlockButton").click(function() {
+
+        });
+        $("#blockAccordion").accordion();
     })
 </script>
 <div class="ui-widget">
@@ -26,7 +30,13 @@
 </div>
 <hr/>
 <div class="ui-widget">
-    Select Experiment: <select id="experimentList"></select><input id="deleteButton" type="submit" value="Remove Experiment" />
+    Select Experiment: <select id="experimentList"></select><input id="updateButton" type="submit" value="Update" /><input id="deleteButton" type="submit" value="Remove Experiment" /><input id="addBlockButton" type="submit" value="+ Block" />
 </div>
+<div id="blockAccordion">
+    <h3><a href="#">Block 1</a></h3>
+    <div class="ui-widget">
+        Upper Left Label: <input id="block-1-upperLeftLabel" type="text" />Upper Right Label: <input id="block-1-upperRightLabel" type="text" /><br/>
+        Lower Left Label: <input id="block-1-lowerLeftLabel" type="text" />Lower Right Label: <input id="block-1-lowerRightLabel" type="text" /><br/>
+    </div>
 </body>
 </html>

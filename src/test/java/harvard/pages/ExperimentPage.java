@@ -4,8 +4,12 @@ import harvard.UrlHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  */
@@ -44,5 +48,18 @@ public class ExperimentPage extends AbstractPage {
             return false;
         }
 
+    }
+
+    public void addBlock() {
+        webDriver.findElement(By.id("addBlockButton")).click();
+    }
+
+    public List<ExperimentBlock> getBlocks() {
+        List<WebElement> elements = webDriver.findElements(By.xpath("//div[@id='blockAccordion']/div"));
+        List<ExperimentBlock> blocks = new ArrayList<ExperimentBlock>();
+        for (WebElement element : elements) {
+            blocks.add(new ExperimentBlock(element));
+        }
+        return blocks;
     }
 }
