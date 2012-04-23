@@ -1,7 +1,9 @@
 package harvard;
 
+import harvard.pages.ExperimentPage;
+import harvard.pages.ImagesPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,11 +12,18 @@ import org.testng.annotations.Test;
 @Test
 public class ViewTests extends AbstractTests {
 
+    @Autowired
     private WebDriver webDriver;
+
+    @Autowired
+    private ExperimentPage experimentPage;
+
+    @Autowired
+    private ImagesPage imagesPage;
 
     @BeforeClass
     void setup() {
-        webDriver = new FirefoxDriver();
+
     }
 
     @AfterClass(alwaysRun = true)
@@ -24,13 +33,20 @@ public class ViewTests extends AbstractTests {
 
     @Test
     void canNavigateToImagesPage() {
-        webDriver.get(urls.views().images());
-        Assert.assertEquals(webDriver.getTitle(), "Images");
+        imagesPage.go();
+        Assert.assertEquals(imagesPage.getTitle(), "Images");
     }
 
     @Test
     void canNavigateToExperimentsPage() {
-        webDriver.get(urls.views().experiments());
-        Assert.assertEquals(webDriver.getTitle(), "Experiments");
+        experimentPage.go();
+        Assert.assertEquals(experimentPage.getTitle(), "Experiments");
     }
+
+    @Test
+    void canCreateNewExperiment() {
+        canNavigateToExperimentsPage();
+
+    }
+
 }
