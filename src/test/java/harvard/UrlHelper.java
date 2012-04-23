@@ -11,7 +11,11 @@ public class UrlHelper {
     private Views views = new Views();
 
     public String getServletUrl() {
-        return ROOT_URL + "/iat";
+        return getRootUrl() + "/iat";
+    }
+
+    public String getRootUrl() {
+        return ROOT_URL;
     }
 
     public String getImagesUrl() {
@@ -32,11 +36,11 @@ public class UrlHelper {
 
     public class Views {
         public String images() {
-            return getImagesUrl();
+            return getRootUrl() + "/images.html";
         }
 
         public String experiments() {
-            return getServletUrl() + "/experiments.html";
+            return getRootUrl() + "/experiments.html";
         }
     }
 }
