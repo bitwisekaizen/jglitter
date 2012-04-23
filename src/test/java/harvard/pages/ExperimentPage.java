@@ -3,6 +3,7 @@ package harvard.pages;
 import harvard.UrlHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +34,15 @@ public class ExperimentPage extends AbstractPage {
     public void deleteExperiment(String name) {
         selectExperiment(name);
         webDriver.findElement(By.id("deleteButton")).click();
+    }
+
+    public boolean containsExperiment(String name) {
+        try {
+            selectExperiment(name);
+            return true;
+        } catch (WebDriverException e) {
+            return false;
+        }
+
     }
 }

@@ -10,10 +10,12 @@
     $(document).ready(function() {
         $( "input:submit" ).button();
         $("#createButton").click(function() {
-            $("#experimentList").append("<option value='DummyOption'>DummyOption</option>");
+            var name = $("#nameTextBox").val();
+            $("#experimentList").append("<option value='" + name +"'>"+ name + "</option>");
         });
         $("#deleteButton").click(function() {
-            $("#experimentList option[value*='DummyOption']").remove();
+            var value = $("#experimentList option:selected").val();
+            $("#experimentList option[value*='" + value + "']").remove();
         });
     })
 </script>
