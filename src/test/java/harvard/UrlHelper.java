@@ -34,5 +34,9 @@ public class UrlHelper {
         public String images() {
             return getImagesUrl();
         }
+
+        public String experiments() {
+            return getServletUrl() + "/experiments.html";
+        }
     }
 }
