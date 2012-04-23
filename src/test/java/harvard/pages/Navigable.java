@@ -1,8 +1,7 @@
 package harvard.pages;
 
 /**
- * Created by IntelliJ IDEA. User: gavin Date: 4/22/12 Time: 8:52 PM To change this template use File | Settings | File
- * Templates.
+ * Represents an entity that can navigate somewhere.
  */
 public interface Navigable {
     void go();

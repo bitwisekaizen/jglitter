@@ -3,5 +3,28 @@
     <title>Experiments</title>
 </head>
 <body>
+<link type="text/css" href="jquery/css/smoothness/jquery-ui-1.8.19.custom.css" rel="Stylesheet" />
+<script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="jquery/js/jquery-ui-1.8.19.custom.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $( "input:submit" ).button();
+        $("#createButton").click(function() {
+            $("#experimentList").append("<option value='DummyOption'>DummyOption</option>");
+        });
+        $("#deleteButton").click(function() {
+            $("#experimentList option[value*='DummyOption']").remove();
+        });
+    })
+</script>
+<div class="ui-widget">
+    Experiment Name: <input id="nameTextBox" type="text" />
+    Description: <input id="descriptionTextBox" type="text" />
+    <input id="createButton" type="submit" value="Create" />
+</div>
+<hr/>
+<div class="ui-widget">
+    Select Experiment: <select id="experimentList"></select><input id="deleteButton" type="submit" value="Remove Experiment" />
+</div>
 </body>
 </html>

@@ -45,8 +45,11 @@ public class ViewTests extends AbstractTests {
 
     @Test
     void canCreateNewExperiment() {
+        String experimentName = "DummyOption";
         canNavigateToExperimentsPage();
-
+        experimentPage.createExperiment(experimentName, "Test Description");
+        experimentPage.selectExperiment(experimentName);
+        experimentPage.deleteExperiment(experimentName);
     }
 
 }
