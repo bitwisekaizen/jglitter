@@ -52,7 +52,7 @@ public class ViewTests extends AbstractTests {
     void canCreateNewExperiment() {
         String experimentName = "Dummy";
         canNavigateToExperimentsPage();
-        experimentPage.createExperiment(experimentName, "Test Description");
+        experimentPage.createExperiment(experimentName);
         experimentPage.selectExperiment(experimentName);
         experimentPage.deleteExperiment(experimentName);
         Assert.assertFalse(experimentPage.containsExperiment(experimentName), "Experiment in list after delete.");

@@ -25,9 +25,8 @@ public class ExperimentPage extends AbstractPage {
         webDriver.get(urls.views().experiments());
     }
 
-    public void createExperiment(String name, String description) {
+    public void createExperiment(String name) {
         webDriver.findElement(By.id("nameTextBox")).sendKeys(name);
-        webDriver.findElement(By.id("descriptionTextBox")).sendKeys(description);
         webDriver.findElement(By.id("createButton")).click();
     }
 
