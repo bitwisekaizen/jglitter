@@ -21,10 +21,10 @@
             var newBlockNum = $("#blockAccordion div").size() + 1;
             $("#blockAccordion").accordion("destroy");
             $("#blockAccordion").append(
-                            '<h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all"> \
+                            '<h3> \
                             <span class="ui-icon ui-icon-triangle-1-s"/> \
                             <a href="#">Block ' + newBlockNum + '</a></h3> \
-                            <div class="ui-widget ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom"> \
+                            <div> \
                             Upper Left Label: <input id="block-' + newBlockNum + '-upperLeftLabel" type="text" /> \
                             Lower Left Label: <input id="block-' + newBlockNum + '-lowerLeftLabel" type="text" /> \
                             <br/> \
