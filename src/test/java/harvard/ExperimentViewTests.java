@@ -3,7 +3,6 @@ package harvard;
 import harvard.pages.ExperimentBlock;
 import harvard.pages.ExperimentPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -11,6 +10,7 @@ import org.testng.annotations.Test;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 @Test
 public class ExperimentViewTests extends AbstractViewTests {
@@ -32,11 +32,12 @@ public class ExperimentViewTests extends AbstractViewTests {
     @AfterMethod
     void cleanupMethod() {
         experimentPage.deleteExperiment(experimentName);
-        Assert.assertFalse(experimentPage.containsExperiment(experimentName), "Experiment in list after delete.");
+        assertFalse(experimentPage.containsExperiment(experimentName), "Experiment in list after delete.");
     }
 
     @Test
     void canModifyExperimentInstructions() {
+        assertEquals(experimentPage.getInstructions(), "");
         experimentPage.setInstructions("Some stuff in the instructions.");
         experimentPage.save();
     }

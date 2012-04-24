@@ -69,4 +69,8 @@ public class ExperimentPage extends AbstractPage {
     public void save() {
         webDriver.findElement(By.id("saveButton")).click();
     }
+
+    public String getInstructions() {
+        return webDriver.findElement(By.id("experimentInstructionsTextArea")).getText();
+    }
 }
