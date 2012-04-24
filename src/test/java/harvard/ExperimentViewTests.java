@@ -13,7 +13,7 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 
 @Test
-public class ExperimentViewTests extends AbstractTests {
+public class ExperimentViewTests extends AbstractViewTests {
 
     @Autowired
     private ExperimentPage experimentPage;
