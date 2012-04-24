@@ -24,7 +24,8 @@
             $("#experimentList option[value*='" + value + "']").remove();
         });
         $("#addBlockButton").click(function() {
-            var newBlockNum = $("#blockAccordion div").size() + 1;
+            var newBlockNum = $("#blockAccordion a").size() + 1;
+            var blockInstructionsId = 'block-' + newBlockNum + '-blockInstructionsTextArea';
             $("#blockAccordion").accordion("destroy");
             $("#blockAccordion").append(
                             '<h3> \
@@ -36,12 +37,13 @@
                             <br/> \
                             Upper Right Label: <input id="block-' + newBlockNum + '-upperRightLabel" type="text" /> \
                             Lower Right Label: <input id="block-' + newBlockNum + '-lowerRightLabel" type="text" /> \
+                            <br/> \
+                            Block Instructions: <textarea rows="10" cols="100" id="' + blockInstructionsId + '"></textarea> \
                             </div>');
+            $("#" + blockInstructionsId).resizable({ handles: "se" });
             $("#blockAccordion").accordion();
         });
-        $("#experimentInstructionsTextArea").resizable({
-            handles: "se"
-        });
+        $("#experimentInstructionsTextArea").resizable({ handles: "se" });
     })
 </script>
 <div class="ui-widget">

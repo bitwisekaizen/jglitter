@@ -56,6 +56,10 @@ public class ExperimentViewTests extends AbstractViewTests {
         block.setUpperRightLabel("upper right");
         block.setLowerRightLabel("lower right");
         assertBlockLabelsAreEqual(block, "upper left", "lower left", "upper right", "lower right");
+
+        assertEquals(block.getInstructions(), "");
+        block.setInstructions("some instructions");
+        assertEquals(block.getInstructions(), "some instructions");
     }
 
     private void assertBlockLabelsAreEqual(ExperimentBlock block, String upperLeft, String lowerLeft, String upperRight, String lowerRight) {

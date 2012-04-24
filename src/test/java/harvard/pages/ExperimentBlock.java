@@ -45,4 +45,11 @@ public class ExperimentBlock {
         webElement.findElement(By.xpath("//input[contains(@id, 'lowerRightLabel')]")).sendKeys(label);
     }
 
+    public String getInstructions() {
+        return webElement.findElement(By.xpath("//textarea[contains(@id, 'blockInstructionsTextArea')]")).getAttribute("value");
+    }
+
+    public void setInstructions(String instructions) {
+        webElement.findElement(By.xpath("//textarea[contains(@id, 'blockInstructionsTextArea')]")).sendKeys(instructions);
+    }
 }
