@@ -6,9 +6,15 @@
 <link type="text/css" href="jquery/css/smoothness/jquery-ui-1.8.19.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="jquery/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="jquery/js/jquery-ui-1.8.19.custom.min.js"></script>
+<style>
+    .ui-resizable-se {
+        bottom: 25px;
+        right: 15px;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function() {
-        $( "input:submit" ).button();
+        $("input:submit").button();
         $("#createButton").click(function() {
             var name = $("#nameTextBox").val();
             $("#experimentList").append("<option value='" + name +"'>"+ name + "</option>");
@@ -33,7 +39,9 @@
                             </div>');
             $("#blockAccordion").accordion();
         });
-
+        $("#experimentInstructionsTextArea").resizable({
+            handles: "se"
+        });
     })
 </script>
 <div class="ui-widget">
@@ -42,7 +50,10 @@
 </div>
 <hr/>
 <div class="ui-widget">
-    Select Experiment: <select id="experimentList"></select><input id="updateButton" type="submit" value="Update" /><input id="deleteButton" type="submit" value="Remove Experiment" /><input id="addBlockButton" type="submit" value="+ Block" />
+Modify Experiment: <select id="experimentList" /><input id="saveButton" type="submit" value="Save" /><input id="deleteButton" type="submit" value="Remove Experiment" /><input id="addBlockButton" type="submit" value="+ Block" /><br/>
+</div>
+<div class="ui-widget">
+Instructions: <textarea id="experimentInstructionsTextArea" rows="10" cols="80"></textarea>
 </div>
 <div id="blockAccordion" />
 </body>

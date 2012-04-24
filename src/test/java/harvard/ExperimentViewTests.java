@@ -2,12 +2,10 @@ package harvard;
 
 import harvard.pages.ExperimentBlock;
 import harvard.pages.ExperimentPage;
-import harvard.pages.ImagesPage;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -15,52 +13,36 @@ import java.util.List;
 import static org.testng.Assert.assertEquals;
 
 @Test
-public class ViewTests extends AbstractTests {
-
-    @Autowired
-    private WebDriver webDriver;
+public class ExperimentViewTests extends AbstractTests {
 
     @Autowired
     private ExperimentPage experimentPage;
 
-    @Autowired
-    private ImagesPage imagesPage;
+    private String experimentName = "Dummy";
 
-    @BeforeClass
+    @BeforeMethod
     void setup() {
-
-    }
-
-    @AfterClass(alwaysRun = true)
-    void cleanup() {
-        webDriver.close();
-    }
-
-    @Test
-    void canNavigateToImagesPage() {
-        imagesPage.go();
-        assertEquals(imagesPage.getTitle(), "Images");
-    }
-
-    @Test
-    void canNavigateToExperimentsPage() {
         experimentPage.go();
         assertEquals(experimentPage.getTitle(), "Experiments");
-    }
 
-    @Test
-    void canCreateNewExperiment() {
-        String experimentName = "Dummy";
-        canNavigateToExperimentsPage();
         experimentPage.createExperiment(experimentName);
         experimentPage.selectExperiment(experimentName);
+    }
+
+    @AfterMethod
+    void cleanupMethod() {
         experimentPage.deleteExperiment(experimentName);
         Assert.assertFalse(experimentPage.containsExperiment(experimentName), "Experiment in list after delete.");
     }
 
     @Test
+    void canModifyExperimentInstructions() {
+        experimentPage.setInstructions("Some stuff in the instructions.");
+        experimentPage.save();
+    }
+
+    @Test
     void canAddBlockToExperiment() {
-        canCreateNewExperiment();
         assertEquals(experimentPage.getBlocks().size(), 0, "Before block is created, experiment should have one block.");
         experimentPage.addBlock();
         List<ExperimentBlock> blocks = experimentPage.getBlocks();
