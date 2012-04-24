@@ -39,6 +39,7 @@ public class ExperimentViewTests extends AbstractViewTests {
     void canModifyExperimentInstructions() {
         assertEquals(experimentPage.getInstructions(), "");
         experimentPage.setInstructions("Some stuff in the instructions.");
+        assertEquals(experimentPage.getInstructions(), "Some stuff in the instructions.");
         experimentPage.save();
     }
 
@@ -49,10 +50,18 @@ public class ExperimentViewTests extends AbstractViewTests {
         List<ExperimentBlock> blocks = experimentPage.getBlocks();
         assertEquals(blocks.size(), 1, "Experiment should have exactly one block.");
         ExperimentBlock block = blocks.get(0);
-        assertEquals(block.getUpperLeftLabel(), "");
-        assertEquals(block.getLowerLeftLabel(), "");
-        assertEquals(block.getUpperRightLabel(), "");
-        assertEquals(block.getLowerRightLabel(), "");
+        assertBlockLabelsAreEqual(block, "", "", "", "");
+        block.setUpperLeftLabel("upper left");
+        block.setLowerLeftLabel("lower left");
+        block.setUpperRightLabel("upper right");
+        block.setLowerRightLabel("lower right");
+        assertBlockLabelsAreEqual(block, "upper left", "lower left", "upper right", "lower right");
     }
 
+    private void assertBlockLabelsAreEqual(ExperimentBlock block, String upperLeft, String lowerLeft, String upperRight, String lowerRight) {
+        assertEquals(block.getUpperLeftLabel(), upperLeft);
+        assertEquals(block.getLowerLeftLabel(), lowerLeft);
+        assertEquals(block.getUpperRightLabel(), upperRight);
+        assertEquals(block.getLowerRightLabel(), lowerRight);
+    }
 }
