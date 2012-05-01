@@ -9,8 +9,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.*;
 
 @Test
 public class ExperimentViewTests extends AbstractViewTests {
@@ -60,6 +59,17 @@ public class ExperimentViewTests extends AbstractViewTests {
         assertEquals(block.getInstructions(), "");
         block.setInstructions("some instructions");
         assertEquals(block.getInstructions(), "some instructions");
+    }
+
+    @Test
+    void experimentIsPersistedAfterSave() {
+        String experimentName = "moo";
+        experimentPage.createExperiment(experimentName);
+        experimentPage.go();
+        assertTrue(experimentPage.containsExperiment(experimentName), "Experiment was not persisted after refresh.");
+        experimentPage.deleteExperiment(experimentName);
+        experimentPage.go();
+        assertFalse(experimentPage.containsExperiment(experimentName), "Experiment was still in list after delete and refresh.");
     }
 
     private void assertBlockLabelsAreEqual(ExperimentBlock block, String upperLeft, String lowerLeft, String upperRight, String lowerRight) {
