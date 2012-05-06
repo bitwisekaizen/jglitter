@@ -8,6 +8,8 @@
 
     <bean id="urlHelper" class="harvard.UrlHelper" />
 
+    <context:component-scan base-package="harvard.pages" />
+
     <bean id="httpClientFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory"/>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">

@@ -33,4 +33,21 @@
     <changeSet id="5-widen-content-column" author="gavin">
         <modifyDataType tableName="image_contents" columnName="content" newDataType="LONGBLOB" />
     </changeSet>
+    <changeSet id="add-experiments-table" author="gavin">
+        <createTable tableName="experiments">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="uuid" type="VARCHAR(256)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="name" type="VARCHAR(128)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="instructions" type="TEXT" />
+        </createTable>
+    </changeSet>
+    <changeSet id="add-autoinc-to-experiments-id" author="gavin">
+        <addAutoIncrement tableName="experiments" columnName="id" columnDataType="int" />
+    </changeSet>
 </databaseChangeLog>

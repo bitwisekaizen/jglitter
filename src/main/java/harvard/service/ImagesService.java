@@ -5,13 +5,13 @@ import harvard.marshallable.Image;
 import harvard.marshallable.ImageContent;
 import harvard.marshallable.Images;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  */
 @Transactional
-@Component
+@Service
 public class ImagesService {
 
     @Autowired

@@ -2,17 +2,19 @@ package harvard;
 
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.testng.annotations.AfterClass;
+import org.springframework.test.context.ContextConfiguration;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.Test;
 
 @Test
+@ContextConfiguration(value = "classpath:ui-test-context.xml")
 public abstract class AbstractViewTests extends AbstractTests {
 
     @Autowired
     private WebDriver webDriver;
 
-    @AfterClass(alwaysRun = true)
-    void cleanupClass() {
+    @AfterSuite(alwaysRun = true)
+    void cleanupSuite() {
         webDriver.close();
     }
 }

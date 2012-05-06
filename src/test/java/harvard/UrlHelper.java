@@ -34,6 +34,14 @@ public class UrlHelper {
         return this.views;
     }
 
+    public String getExperimentsUrl() {
+        return getServletUrl() + ExperimentsController.EXPERIMENTS_MAPPING;
+    }
+
+    public String getDeleteExperimentsUrl() {
+        return getServletUrl() + ExperimentsController.EXPERIMENTS_DELETE_MAPPING;
+    }
+
     public class Views {
         public String images() {
             return getRootUrl() + "/images.html";
