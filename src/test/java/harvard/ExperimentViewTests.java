@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.testng.Assert.*;
 
@@ -17,14 +18,16 @@ public class ExperimentViewTests extends AbstractViewTests {
     @Autowired
     private ExperimentPage experimentPage;
 
-    private String experimentName = "Dummy";
+    private String experimentName;
+    private String experimentInstructions = "some instructions!";
 
     @BeforeMethod
     void setup() {
         experimentPage.go();
         assertEquals(experimentPage.getTitle(), "Experiments");
 
-        experimentPage.createExperiment(experimentName);
+        experimentName = "test " + UUID.randomUUID().toString();
+        experimentPage.createExperiment(experimentName, experimentInstructions);
         experimentPage.selectExperiment(experimentName);
     }
 
@@ -62,14 +65,16 @@ public class ExperimentViewTests extends AbstractViewTests {
     }
 
     @Test
-    void experimentIsPersistedAfterSave() {
-        String experimentName = "moo";
-        experimentPage.createExperiment(experimentName);
+    void experimentIsPersistedAfterSave() throws InterruptedException {
+        String testName = "test " + UUID.randomUUID().toString();
+        experimentPage.createExperiment(testName, experimentInstructions);
         experimentPage.go();
-        assertTrue(experimentPage.containsExperiment(experimentName), "Experiment was not persisted after refresh.");
-        experimentPage.deleteExperiment(experimentName);
+        Thread.sleep(1000);
+        assertTrue(experimentPage.containsExperiment(testName), "Experiment was not persisted after refresh.");
+        experimentPage.deleteExperiment(testName);
         experimentPage.go();
-        assertFalse(experimentPage.containsExperiment(experimentName), "Experiment was still in list after delete and refresh.");
+        Thread.sleep(1000);
+        assertFalse(experimentPage.containsExperiment(testName), "Experiment was still in list after delete and refresh.");
     }
 
     private void assertBlockLabelsAreEqual(ExperimentBlock block, String upperLeft, String lowerLeft, String upperRight, String lowerRight) {

@@ -1,5 +1,6 @@
 package harvard.marshallable;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Experiments {
         }
     }
 
+    @XmlElement(name = "experiment")
     public List<Experiment> getExperiments() {
         return experiments;
     }

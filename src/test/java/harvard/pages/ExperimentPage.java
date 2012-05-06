@@ -25,13 +25,16 @@ public class ExperimentPage extends AbstractPage {
         webDriver.get(urls.views().experiments());
     }
 
-    public void createExperiment(String name) {
+    public void createExperiment(String name, String instructions) {
+        webDriver.findElement(By.id("nameTextBox")).clear();
+        webDriver.findElement(By.id("experimentInstructionsTextArea")).clear();
         webDriver.findElement(By.id("nameTextBox")).sendKeys(name);
+        webDriver.findElement(By.id("experimentInstructionsTextArea")).sendKeys(instructions);
         webDriver.findElement(By.id("createButton")).click();
     }
 
     public void selectExperiment(String name) {
-        webDriver.findElement(By.xpath("//select[@id='experimentList']/option[text()='" + name + "']"));
+        webDriver.findElement(By.xpath("//select[@id='experimentList']/option[text()='" + name + "']")).click();
     }
 
     public void deleteExperiment(String name) {

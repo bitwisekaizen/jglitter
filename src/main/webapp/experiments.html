@@ -14,14 +14,38 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function() {
+        function addExperimentToList(name) {
+            $("#experimentList").append("<option value='" + name +"'>"+ name + "</option>");
+        }
+        function removeExperimentFromList(name) {
+            $("#experimentList option[value*='" + name + "']").remove();
+        }
+        function loadExperiments() {
+            $.get('iat/experiments', function(data) {
+                $("#experimentList option").remove();
+                $('experiment', data).each(function() {
+                    var name = $(this).find("name").text();
+                    addExperimentToList(name);
+                });
+            }, "xml");
+        }
+
+        // populate experiments when page is ready
+        loadExperiments();
+
         $("input:submit").button();
         $("#createButton").click(function() {
             var name = $("#nameTextBox").val();
-            $("#experimentList").append("<option value='" + name +"'>"+ name + "</option>");
+            $.post('iat/experiments', {name: name, instructions: $("#experimentInstructionsTextArea").val()}, function() {
+                addExperimentToList(name);
+            }, "xml");
         });
         $("#deleteButton").click(function() {
-            var value = $("#experimentList option:selected").val();
-            $("#experimentList option[value*='" + value + "']").remove();
+            var name = $("#experimentList option:selected").val();
+            $.post('iat/experiments/delete', {name: name}, function() {
+                removeExperimentFromList(name);
+            }, "xml");
+            removeExperimentFromList(name);
         });
         $("#addBlockButton").click(function() {
             var newBlockNum = $("#blockAccordion a").size() + 1;
@@ -42,20 +66,23 @@
                             </div>');
             $("#" + blockInstructionsId).resizable({ handles: "se" });
             $("#blockAccordion").accordion();
+
+            $(function() {
+                $("#createButton").click(function() {
+                });
+            });
         });
         $("#experimentInstructionsTextArea").resizable({ handles: "se" });
     })
 </script>
 <div class="ui-widget">
-    Experiment Name: <input id="nameTextBox" type="text" />
+    Experiment Name: <input id="nameTextBox" type="text" /><br/>
+    Instructions: <textarea id="experimentInstructionsTextArea" rows="10" cols="80"></textarea>
     <input id="createButton" type="submit" value="Create" />
 </div>
 <hr/>
 <div class="ui-widget">
 Modify Experiment: <select id="experimentList" /><input id="saveButton" type="submit" value="Save" /><input id="deleteButton" type="submit" value="Remove Experiment" /><input id="addBlockButton" type="submit" value="+ Block" /><br/>
-</div>
-<div class="ui-widget">
-Instructions: <textarea id="experimentInstructionsTextArea" rows="10" cols="80"></textarea>
 </div>
 <div id="blockAccordion" />
 </body>
