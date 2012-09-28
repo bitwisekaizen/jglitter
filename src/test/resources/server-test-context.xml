@@ -6,10 +6,6 @@
 
     <import resource="classpath:jaxb-config.xml" />
 
-    <bean id="urlHelper" class="harvard.UrlHelper" />
-
-    <context:component-scan base-package="harvard.pages" />
-
     <bean id="httpClientFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory"/>
 
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
@@ -17,7 +13,6 @@
 
         <property name="messageConverters">
             <list>
-                <ref bean="byteArrayHttpMessageConverter" />
                 <bean class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
                     <property name="marshaller" ref="jaxbMarshaller"/>
                     <property name="unmarshaller" ref="jaxbMarshaller"/>

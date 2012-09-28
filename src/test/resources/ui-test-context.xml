@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="webDriver" class="org.openqa.selenium.firefox.FirefoxDriver" />
-    <context:component-scan base-package="harvard.pages" />
+    <context:component-scan base-package="com.jglitter.test.pages" />
     <import resource="classpath:test-context.xml" />
 
 </beans>

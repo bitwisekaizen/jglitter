@@ -7,7 +7,6 @@
 
   <!-- Welcome file list. -->
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
 
@@ -43,23 +42,9 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
 
-  <!-- Maps all /accounts URLs to the 'harvard' servlet -->
+  <!-- Maps all /ws URLs to the 'jglitter' servlet -->
   <servlet-mapping>
     <servlet-name>jglitter</servlet-name>
     <url-pattern>/ws/*</url-pattern>
   </servlet-mapping>
-
-  <!--<filter>
-    <filter-name>hibernateFilter</filter-name>
-    <filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
-    <init-param>
-      <param-name>sessionFactoryBeanName</param-name>
-      <param-value>sessionFactory</param-value>
-    </init-param>
-  </filter>
-
-  <filter-mapping>
-    <filter-name>hibernateFilter</filter-name>
-    <url-pattern>/iat/*</url-pattern>
-  </filter-mapping>-->
 </web-app>
