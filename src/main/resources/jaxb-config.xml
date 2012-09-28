@@ -6,12 +6,12 @@
     <bean id="jaxbMarshaller" class="com.dharrigan.AnnotationJaxb2Marshaller">
         <property name="classesToBeBound">
             <array>
-                <value>harvard.marshallable.Images</value>
+                <value>com.jglitter.domain.User</value>
             </array>
         </property>
         <property name="packagesToScan">
             <array>
-                <value>harvard.marshallable</value>
+                <value>com.jglitter.domain</value>
             </array>
         </property>
     </bean>

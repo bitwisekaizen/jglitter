@@ -6,10 +6,14 @@
  */
 package com.jglitter.domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class User {
 
+    protected User() {}
 
     public User(final String email, final String name) {
-        //To change body of created methods use File | Settings | File Templates.
+        this();
     }
 }

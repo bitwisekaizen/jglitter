@@ -26,9 +26,9 @@ public class JGlitterRestTests extends AbstractTests {
 
         User johnDoe = new User("john@doe.com", "JohnDoe");
 
-        User addedUser = restTemplate.postForEntity("http://localhost:8080/jglitter/user", johnDoe, User.class).getBody();
+        User addedUser = restTemplate.postForEntity("http://localhost:8080/jglitter/ws/user", johnDoe, User.class).getBody();
 
-        Users allUsers = restTemplate.getForEntity("http://localhost:8080/jglitter/user", Users.class).getBody();
+        Users allUsers = restTemplate.getForEntity("http://localhost:8080/jglitter/ws/user", Users.class).getBody();
 
         assertTrue(allUsers.contains(addedUser), "All users didn't include newly added user.");
     }

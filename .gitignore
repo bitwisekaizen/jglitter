@@ -4,3 +4,5 @@ target/
 *.iml
 *.yml
 atlassian-ide-plugin.xml
+mem.trace.db
+mem.h2.db

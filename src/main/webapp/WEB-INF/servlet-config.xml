@@ -13,6 +13,7 @@
     <tx:annotation-driven/>
 
     <context:component-scan base-package="harvard" />
+    <context:component-scan base-package="com.jglitter.web" />
 
     <import resource="classpath:jaxb-config.xml" />
     <!--
