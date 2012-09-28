@@ -6,6 +6,7 @@
  */
 package com.jglitter.domain;
 
+import com.jglitter.persistence.domain.DbUser;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -25,6 +26,10 @@ public class User {
         this();
         this.email = email;
         this.name = name;
+    }
+
+    public User(final DbUser user) {
+        this(user.getEmail(), user.getName());
     }
 
     @Override
