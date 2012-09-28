@@ -3,3 +3,4 @@ target/
 .idea
 *.iml
 *.yml
+atlassian-ide-plugin.xml

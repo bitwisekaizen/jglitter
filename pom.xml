@@ -2,13 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>co.gavin</groupId>
-    <artifactId>harvard</artifactId>
-    <name>harvard</name>
+    <groupId>com.thegrayfiles</groupId>
+    <artifactId>jglitter</artifactId>
+    <name>jglitter</name>
     <packaging>war</packaging>
     <version>1.0.0-BUILD-SNAPSHOT</version>
 
-    <!-- Brad was here.  -->
     <properties>
         <springframework.version>3.1.1.RELEASE</springframework.version>
     </properties>
@@ -120,7 +119,7 @@
     </dependencies>
 
     <build>
-        <finalName>harvard</finalName>
+        <finalName>jglitter</finalName>
     </build>
 
     <profiles>
