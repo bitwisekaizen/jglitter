@@ -6,12 +6,15 @@ package harvard;
  */
 public class UrlHelper {
 
-    private String ROOT_URL = "http://localhost:8080/harvard";
-    //private static final String ROOT_URL = "http://jsidlab-stage.cloudfoundry.com";
+    private String ROOT_URL = "http://localhost:8080/jglitter";
     private Views views = new Views();
 
     public String getServletUrl() {
         return getRootUrl() + "/iat";
+    }
+
+    public String wsRoot() {
+        return getRootUrl() + "/ws";
     }
 
     public String getRootUrl() {
