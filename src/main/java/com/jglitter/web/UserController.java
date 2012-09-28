@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class UserController {
 
+    private Users users = new Users();
+
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User createUser(@RequestBody User user) {
+        users.add(user);
         return user;
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Users getUsers() {
-        return new Users();
+        return users;
     }
 }
