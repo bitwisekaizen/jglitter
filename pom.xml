@@ -8,6 +8,7 @@
     <packaging>war</packaging>
     <version>1.0.0-BUILD-SNAPSHOT</version>
 
+    <!-- Brad was here.  -->
     <properties>
         <springframework.version>3.1.1.RELEASE</springframework.version>
     </properties>
