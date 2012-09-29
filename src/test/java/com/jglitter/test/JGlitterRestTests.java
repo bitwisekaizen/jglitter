@@ -6,6 +6,8 @@
  */
 package com.jglitter.test;
 
+import com.jglitter.domain.Tweet;
+import com.jglitter.domain.Tweets;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,14 @@ public class JGlitterRestTests extends AbstractTests {
         User johnDoe = restTemplate.postForEntity(wsRoot() + "/user", new User("john@doe.com", "JohnDoe"), User.class).getBody();
         Users allUsers = restTemplate.getForEntity(wsRoot() + "/user", Users.class).getBody();
         assertTrue(allUsers.contains(johnDoe), "All users didn't include newly added user.");
+    }
+
+    @Test
+    void userCanAuthorATweet() {
+        User author = restTemplate.postForEntity(wsRoot() + "/user", new User("auth@or.com", "JohnDoe"), User.class).getBody();
+        Tweet tweet = restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, "This is my first tweet!"), Tweet.class).getBody();
+        Tweets tweets = restTemplate.getForEntity(wsRoot() + "/tweets/byAuthor/" + author.getEmail(), Tweets.class).getBody();
+        assertTrue(tweets.contains(tweet), "All tweets by the author includes the new tweet.");
     }
 
     private String wsRoot() {
