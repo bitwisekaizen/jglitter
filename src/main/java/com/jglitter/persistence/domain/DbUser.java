@@ -8,15 +8,9 @@ package com.jglitter.persistence.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
-public class DbUser {
-
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class DbUser extends HasPrimaryKey {
 
     @Column
     private String email;
@@ -31,10 +25,6 @@ public class DbUser {
     }
 
     protected DbUser() {
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getEmail() {

@@ -11,16 +11,10 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class DbTweet {
-
-    @Id
-    @GeneratedValue
-    private Integer id;
+public class DbTweet extends HasPrimaryKey {
 
     @ManyToOne
     private DbUser author;
@@ -34,10 +28,7 @@ public class DbTweet {
         this.message = message;
     }
 
-    protected DbTweet(){}
-
-    public Integer getId() {
-        return id;
+    protected DbTweet() {
     }
 
     @Override
