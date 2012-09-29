@@ -37,4 +37,12 @@
     <changeSet id="003-user-unique-by-email" author="Brad">
         <addUniqueConstraint tableName="dbuser" columnNames="email"/>
     </changeSet>
+
+    <changeSet id="004-add-user-uuid-column" author="Brad">
+        <addColumn tableName="dbuser">
+            <column name="uuid" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

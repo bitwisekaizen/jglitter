@@ -8,6 +8,7 @@ package com.jglitter.persistence.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.util.UUID;
 
 @Entity
 public class DbUser extends HasPrimaryKey {
@@ -18,10 +19,14 @@ public class DbUser extends HasPrimaryKey {
     @Column
     private String name;
 
+    @Column
+    private String uuid;
+
     public DbUser(final String email, final String name) {
         this();
         this.email = email;
         this.name = name;
+        uuid = UUID.randomUUID().toString();
     }
 
     protected DbUser() {
@@ -33,6 +38,10 @@ public class DbUser extends HasPrimaryKey {
 
     public String getName() {
         return name;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     @Override

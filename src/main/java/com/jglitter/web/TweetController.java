@@ -25,7 +25,7 @@ public class TweetController {
         return tweet;
     }
 
-    @RequestMapping(value = "/tweets/byAuthor/{authorId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{authorId}/tweets", method = RequestMethod.GET)
     public Tweets findTweetsAuthoredBy(@PathVariable String authorId) {
         return tweets;
     }

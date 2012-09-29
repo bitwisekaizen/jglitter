@@ -7,17 +7,15 @@
 package com.jglitter.domain;
 
 import com.jglitter.persistence.domain.DbUser;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
 
 @XmlRootElement
 public class User {
 
     private String email;
     private String name;
+    private String id;
 
     protected User() {
     }
@@ -30,6 +28,7 @@ public class User {
 
     public User(final DbUser user) {
         this(user.getEmail(), user.getName());
+        this.id = user.getUuid();
     }
 
     @Override
@@ -60,5 +59,13 @@ public class User {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
     }
 }
