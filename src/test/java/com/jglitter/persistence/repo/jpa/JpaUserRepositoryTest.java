@@ -18,7 +18,9 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 @Test
 @ContextConfiguration({"classpath:application-config.xml"})
@@ -43,5 +45,27 @@ public class JpaUserRepositoryTest extends AbstractTransactionalTestNGSpringCont
         final List<DbUser> all = userRepository.findAll();
         assertTrue(all.contains(johnDoe));
         assertTrue(all.contains(janeDoe));
+    }
+
+    @Test
+    public void canFindUserByEmail() {
+        final DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
+        final DbUser janeDoe = userRepository.persist(new DbUser("jane@doe.com", "Jane Doe"));
+        assertTrue(johnDoe.equals(userRepository.findByEmail("john@doe.com")));
+        assertTrue(janeDoe.equals(userRepository.findByEmail("jane@doe.com")));
+        assertNull(userRepository.findByEmail("not@here.com"), "Mistakenly found a user by email not in database");
+    }
+
+    @Test
+    public void cannotPersistMoreThanOneUserWithSameEmailAddress() {
+        final DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
+        assertNotNull(johnDoe.getId(), "Newly persisted user did not have primary key.");
+
+        try {
+            userRepository.persist(new DbUser("john@doe.com", "Jim Doe"));
+            fail("Should have disallowed persisting second user with duplicated email");
+        } catch (Exception e){
+
+        }
     }
 }

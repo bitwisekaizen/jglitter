@@ -17,7 +17,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="0023-add-tweet-table" author="Brad">
+    <changeSet id="002-add-tweet-table" author="Brad">
         <createTable tableName="dbtweet">
             <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true"/>
@@ -32,5 +32,9 @@
         <addForeignKeyConstraint baseTableName="dbtweet" baseColumnNames="author_id"
                                  referencedTableName="dbuser" referencedColumnNames="id"
                                  constraintName="FK_tweet_author"/>
+    </changeSet>
+
+    <changeSet id="003-user-unique-by-email" author="Brad">
+        <addUniqueConstraint tableName="dbuser" columnNames="email"/>
     </changeSet>
 </databaseChangeLog>
