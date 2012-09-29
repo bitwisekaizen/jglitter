@@ -15,8 +15,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 @Test
 @ContextConfiguration({"classpath:application-config.xml"})
@@ -37,5 +40,21 @@ public class JpaTweetRepositoryTest extends AbstractTransactionalTestNGSpringCon
 
         DbTweet retrieved = tweetRepo.findById(tweet.getId());
         assertEquals(retrieved, tweet, "Tweet retrieved by primary key not same as persisted tweet");
+    }
+
+    @Test
+    public void canFindAllTweetsByAuthor() {
+        DbUser elaine = userRepo.persist(new DbUser("elaine@bennis.com", "Elaine Benes"));
+        DbUser george = userRepo.persist(new DbUser("george@castanza.com", "George Costanza"));
+
+        DbTweet elainesTweet = tweetRepo.persist(new DbTweet(elaine, "I'm an awesome dancer."));
+
+        tweetRepo.persist(new DbTweet(george, "George is getting angry."));
+        tweetRepo.persist(new DbTweet(george, "I wish I was an architect."));
+        tweetRepo.persist(new DbTweet(george, "I'm going bald."));
+
+        Collection<DbTweet> tweets = tweetRepo.findAllByAuthor(elaine);
+        assertEquals(1, tweets.size(), "Tweet count of tweets by author not accurate");
+        assertTrue(tweets.contains(elainesTweet), "Did not find expected tweet by author");
     }
 }
