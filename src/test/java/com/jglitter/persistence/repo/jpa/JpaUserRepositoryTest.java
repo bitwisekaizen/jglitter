@@ -30,7 +30,7 @@ public class JpaUserRepositoryTest extends AbstractTransactionalTestNGSpringCont
     @Test
     public void canPersistAUser() {
         DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
-        assertNotNull(johnDoe.getId(), "Newly persisted user did have primary key.");
+        assertNotNull(johnDoe.getId(), "Newly persisted user did not have primary key.");
 
         DbUser retrieved = userRepository.findById(johnDoe.getId());
         assertEquals(retrieved, johnDoe, "Retrieved user did not match newly inserted user.");
