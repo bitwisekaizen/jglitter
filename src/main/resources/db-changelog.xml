@@ -16,4 +16,21 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet id="0023-add-tweet-table" author="Brad">
+        <createTable tableName="dbtweet">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="author_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="varchar(140)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="dbtweet" baseColumnNames="author_id"
+                                 referencedTableName="dbuser" referencedColumnNames="id"
+                                 constraintName="FK_tweet_author"/>
+    </changeSet>
 </databaseChangeLog>
