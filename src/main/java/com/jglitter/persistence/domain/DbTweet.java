@@ -44,4 +44,12 @@ public class DbTweet extends HasPrimaryKey {
     public int hashCode() {
         return new HashCodeBuilder().append(author).append(message).toHashCode();
     }
+
+    public DbUser getAuthor() {
+        return author;
+    }
+
+    public String getMessage() {
+        return message;
+    }
 }

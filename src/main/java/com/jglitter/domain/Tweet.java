@@ -6,6 +6,7 @@
  */
 package com.jglitter.domain;
 
+import com.jglitter.persistence.domain.DbTweet;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -21,6 +22,10 @@ public class Tweet {
         this();
         this.author = author;
         this.message = message;
+    }
+
+    public Tweet(final DbTweet tweet) {
+        this(new User(tweet.getAuthor()), tweet.getMessage());
     }
 
     public Tweet() {

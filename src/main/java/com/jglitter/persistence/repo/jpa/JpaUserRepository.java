@@ -26,17 +26,13 @@ public class JpaUserRepository implements UserRepository {
         return user;
     }
 
-    public DbUser findById(final Integer id) {
-        return em.getReference(DbUser.class, id);
-    }
-
     public List<DbUser> findAll() {
         return em.createQuery("select d from DbUser d", DbUser.class).getResultList();
     }
 
-    public DbUser findByEmail(final String email) {
-        final TypedQuery<DbUser> query = em.createQuery("select d from DbUser d where d.email = :email", DbUser.class);
-        final List<DbUser> users = query.setParameter("email", email).getResultList();
+    public DbUser findByUuid(final String id) {
+        final TypedQuery<DbUser> query = em.createQuery("select d from DbUser d where d.uuid = :user_uuid", DbUser.class);
+        final List<DbUser> users = query.setParameter("user_uuid", id).getResultList();
         return users.isEmpty() ? null : users.get(0);
     }
 }

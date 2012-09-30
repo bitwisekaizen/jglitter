@@ -11,10 +11,15 @@ import com.jglitter.domain.Tweets;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 @Test
 public class JGlitterRestTests extends AbstractTests {
@@ -35,6 +40,17 @@ public class JGlitterRestTests extends AbstractTests {
         Tweet tweet = restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, "This is my first tweet!"), Tweet.class).getBody();
         Tweets tweets = restTemplate.getForEntity(wsRoot() + "/user/" + author.getId() + "/tweets", Tweets.class).getBody();
         assertTrue(tweets.contains(tweet), "All tweets by the author includes the new tweet.");
+    }
+
+    @Test
+    void unknownUserCannotAuthorATweet() {
+        User unknownAuthor = new User("sneaky@bastard.com", "sneaky");
+        try {
+            restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(unknownAuthor, "This is my first tweet!"), Tweet.class).getBody();
+            fail("Should have failed posting a tweet by an unknown author.");
+        } catch (HttpClientErrorException exception) {
+            assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode(), "Error code wasn't NOT_FOUND");
+        }
     }
 
     private String wsRoot() {

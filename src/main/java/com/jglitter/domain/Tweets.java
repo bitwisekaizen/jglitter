@@ -28,6 +28,6 @@ public class Tweets {
     }
 
     public void add(final Tweet tweet) {
-        tweets.add(tweet);
+        getTweets().add(tweet);
     }
 }

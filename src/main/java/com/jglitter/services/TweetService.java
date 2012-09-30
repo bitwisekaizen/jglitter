@@ -6,14 +6,13 @@
  */
 package com.jglitter.services;
 
+import com.jglitter.domain.Tweet;
+import com.jglitter.domain.Tweets;
 import com.jglitter.domain.User;
-import com.jglitter.domain.Users;
 
-public interface UserService {
+public interface TweetService {
 
-    User createUser(User user);
+    Tweet create(Tweet tweet);
 
-    Users findAllUsers();
-
-    User findById(String userId);
+    Tweets findAllBy(User author);
 }

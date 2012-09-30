@@ -37,4 +37,8 @@ public class RepositoryPoweredUserService implements UserService {
         }
         return users;
     }
+
+    public User findById(final String userId) {
+        return new User(userRepo.findByUuid(userId));
+    }
 }

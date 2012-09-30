@@ -34,7 +34,7 @@ public class JpaUserRepositoryTest extends AbstractTransactionalTestNGSpringCont
         DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
         assertNotNull(johnDoe.getId(), "Newly persisted user did not have primary key.");
 
-        DbUser retrieved = userRepository.findById(johnDoe.getId());
+        DbUser retrieved = userRepository.findByUuid(johnDoe.getUuid());
         assertEquals(retrieved, johnDoe, "Retrieved user did not match newly inserted user.");
     }
 
@@ -51,9 +51,9 @@ public class JpaUserRepositoryTest extends AbstractTransactionalTestNGSpringCont
     public void canFindUserByEmail() {
         final DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
         final DbUser janeDoe = userRepository.persist(new DbUser("jane@doe.com", "Jane Doe"));
-        assertTrue(johnDoe.equals(userRepository.findByEmail("john@doe.com")));
-        assertTrue(janeDoe.equals(userRepository.findByEmail("jane@doe.com")));
-        assertNull(userRepository.findByEmail("not@here.com"), "Mistakenly found a user by email not in database");
+        assertTrue(johnDoe.equals(userRepository.findByUuid(johnDoe.getUuid())));
+        assertTrue(janeDoe.equals(userRepository.findByUuid(janeDoe.getUuid())));
+        assertNull(userRepository.findByUuid("NotFound"), "Mistakenly found a user by uuid not in database");
     }
 
     @Test

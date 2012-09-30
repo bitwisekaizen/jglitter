@@ -14,9 +14,7 @@ public interface UserRepository {
 
     DbUser persist(DbUser user);
 
-    DbUser findById(Integer id);
-
     List<DbUser> findAll();
 
-    DbUser findByEmail(String email);
+    DbUser findByUuid(String id);
 }
