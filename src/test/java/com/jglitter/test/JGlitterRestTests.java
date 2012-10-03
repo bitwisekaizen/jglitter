@@ -65,7 +65,7 @@ public class JGlitterRestTests extends AbstractTests {
 
     @Test
     void userCanAuthorATweet() {
-        User author = restTemplate.postForEntity(wsRoot() + "/user", new User("auth@or.com", "JohnDoe"), User.class).getBody();
+        User author = userToFollow;
         Tweet tweet = restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, "This is my first tweet!"), Tweet.class).getBody();
         Tweets tweets = restTemplate.getForEntity(wsRoot() + "/user/" + author.getId() + "/tweets", Tweets.class).getBody();
         assertTrue(tweets.contains(tweet), "All tweets by the author includes the new tweet.");
