@@ -10,15 +10,20 @@ import com.jglitter.domain.Tweet;
 import com.jglitter.domain.Tweets;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
+import liquibase.precondition.Precondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
@@ -27,13 +32,25 @@ public class JGlitterRestTests extends AbstractTests {
 
     @Autowired
     private RestTemplate restTemplate;
+    private User follower;
+    private User userToFollow;
+
+    @BeforeMethod
+    void setup() {
+        follower = createUser("gavin@vmware.com", "Gavin Gray");
+        userToFollow = createUser("brad@vmware.com", "Brad");
+    }
+
+    @AfterMethod(alwaysRun = true)
+    void teardown() {
+        deleteUser(follower.getId());
+        deleteUser(userToFollow.getId());
+    }
 
     @Test
     void canCreateAUser() {
-        User johnDoe = createUser("john@doe.com", "John Doe");
         Users allUsers = restTemplate.getForEntity(wsRoot() + "/user", Users.class).getBody();
-        assertTrue(allUsers.contains(johnDoe), "All users didn't include newly added user.");
-        deleteUser(johnDoe.getId());
+        assertTrue(allUsers.contains(follower), "All users didn't include newly added user.");
     }
 
     private void deleteUser(String id) {
@@ -41,7 +58,9 @@ public class JGlitterRestTests extends AbstractTests {
     }
 
     private User createUser(String email, String username) {
-        return restTemplate.postForEntity(wsRoot() + "/user", new User(email, username), User.class).getBody();
+        User aUser = restTemplate.postForEntity(wsRoot() + "/user", new User(email, username), User.class).getBody();
+        assertNotNull(aUser, "Create user failed " + username);
+        return aUser;
     }
 
     @Test
@@ -65,13 +84,13 @@ public class JGlitterRestTests extends AbstractTests {
 
     @Test
     void canFollowAnotherUser() {
-        User aUser = createUser("gavin@vmware.com", "Gavin Gray");
-        User userToFollow = createUser("brad@vmware.com", "Brad");
-        followUser(aUser, userToFollow);
+        followUser(follower, userToFollow);
 
-        Users followees = getFollowees(aUser);
+        Users followees = getFollowees(follower);
         assertEquals(1, followees.getUsers().size());
         assertTrue(followees.contains(userToFollow), "Expected followee not found");
+
+
     }
 
     private Users getFollowees(User aUser) {
