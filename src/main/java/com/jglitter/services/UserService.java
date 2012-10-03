@@ -13,6 +13,8 @@ public interface UserService {
 
     User createUser(User user);
 
+    void deleteUser(String userId);
+
     Users findAllUsers();
 
     User findById(String userId);

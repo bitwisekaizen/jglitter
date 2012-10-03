@@ -35,4 +35,10 @@ public class JpaUserRepository implements UserRepository {
         final List<DbUser> users = query.setParameter("user_uuid", id).getResultList();
         return users.isEmpty() ? null : users.get(0);
     }
+
+    @Override
+    public void delete(DbUser user) {
+        final TypedQuery<DbUser> query = em.createQuery("delete from DbUser d where d.uuid = :user_uuid", DbUser.class);
+        query.setParameter("user_uuid", user.getUuid()).executeUpdate();
+    }
 }

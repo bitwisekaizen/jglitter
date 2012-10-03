@@ -17,4 +17,6 @@ public interface UserRepository {
     List<DbUser> findAll();
 
     DbUser findByUuid(String id);
+
+    void delete(DbUser user);
 }

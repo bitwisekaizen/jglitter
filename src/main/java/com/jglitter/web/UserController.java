@@ -22,6 +22,11 @@ public class UserController {
         return userService.createUser(user);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable String userId) {
+        userService.deleteUser(userId);
+    }
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Users getUsers() {
         return userService.findAllUsers();
