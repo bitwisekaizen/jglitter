@@ -84,13 +84,13 @@ public class JGlitterRestTests extends AbstractTests {
 
     @Test
     void canFollowAnotherUser() {
-        followUser(follower, userToFollow);
+        User follower1 = createUser("iliketo@follow.com", "Follower");
+        User userToFollow1 = createUser("ipostgoodtweets@me.com", "Followee");
+        followUser(follower1, userToFollow1);
 
-        Users followees = getFollowees(follower);
+        Users followees = getFollowees(follower1);
         assertEquals(1, followees.getUsers().size());
-        assertTrue(followees.contains(userToFollow), "Expected followee not found");
-
-
+        assertTrue(followees.contains(userToFollow1), "Expected followee not found");
     }
 
     private Users getFollowees(User aUser) {

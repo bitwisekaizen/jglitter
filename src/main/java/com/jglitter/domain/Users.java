@@ -6,9 +6,12 @@
  */
 package com.jglitter.domain;
 
+import com.jglitter.persistence.domain.DbUser;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @XmlRootElement
 public class Users {

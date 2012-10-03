@@ -16,8 +16,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 @Test
 @ContextConfiguration({"classpath:application-config.xml"})
@@ -44,4 +47,18 @@ public class JpaFollowerRepositoryTest extends AbstractTransactionalTestNGSpring
     }
 
 
+    @Test
+    public void canFindAllFolloweesForAUser() {
+        DbUser follower = userRepository.persist(new DbUser("follower@doe.com", "Follower Doe"));
+        DbUser followee = userRepository.persist(new DbUser("followee@doe.com", "Followee Doe"));
+        DbUser followee2 = userRepository.persist(new DbUser("followee2@doe.com", "Followee2 Doe"));
+
+        DbFollower addedDbFollower = followerRepository.persist(new DbFollower(follower, followee));
+        DbFollower addedDbFollower2 = followerRepository.persist(new DbFollower(follower, followee2));
+
+        List<DbUser> followees = followerRepository.findFollowees(follower);
+        assertEquals(followees.size(), 2);
+        assertTrue(followees.contains(followee));
+        assertTrue(followees.contains(followee2));
+    }
 }

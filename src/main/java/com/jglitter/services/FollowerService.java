@@ -13,5 +13,5 @@ public interface FollowerService {
 
     void createFollower( User follower,  User followee);
 
-    Users findAllFollowers(User user);
+    Users findFollowees(User user);
 }

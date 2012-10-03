@@ -3,10 +3,10 @@ package com.jglitter.web;
 import com.google.common.base.Preconditions;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
+import com.jglitter.services.FollowerService;
 import com.jglitter.services.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private FollowerService followerService;
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User createUser(@RequestBody User user) {
@@ -41,15 +44,17 @@ public class UserController {
     @RequestMapping(value = "/followers/{followerId}/{userToFollowId}", method = RequestMethod.POST)
     public @ResponseBody
     void addUserToFollow(@PathVariable String followerId, @PathVariable String userToFollowId) {
+        User follower = userService.findById(followerId);
+        User followee = userService.findById(userToFollowId);
 
+        followerService.createFollower(follower, followee);
 
     }
 
     @RequestMapping(value = "/followees/{followerId}", method = RequestMethod.GET)
     public Users getFollowees(@PathVariable String followerId) {
-        Users users = new Users();
-        users.add(new User("brad@vmware.com", "brad"));
-        return users;
+        User follower = userService.findById(followerId);
+        return followerService.findFollowees(follower);
     }
 
     /**

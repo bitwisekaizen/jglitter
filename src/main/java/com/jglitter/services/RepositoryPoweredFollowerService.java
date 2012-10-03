@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: mchaudhary
@@ -27,7 +29,6 @@ public class RepositoryPoweredFollowerService implements FollowerService {
     @Autowired
     UserRepository userRepo;
 
-    @Override
     @Transactional
     public void createFollower(User follower, User followee) {
         DbUser dbFollower = userRepo.findByUuid(follower.getId());
@@ -35,9 +36,15 @@ public class RepositoryPoweredFollowerService implements FollowerService {
         followerRep.persist(new DbFollower(dbFollower, dbFollowee));
     }
 
+    public Users findFollowees(User follower) {
+        DbUser dbFollower = userRepo.findByUuid(follower.getId());
 
-    @Override
-    public Users findAllFollowers(User user) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Users users = new Users();
+        List<DbUser> followees = followerRep.findFollowees(dbFollower);
+        for (DbUser eachFollowee : followees) {
+            users.add(new User(eachFollowee));
+        }
+
+        return users;
     }
 }
