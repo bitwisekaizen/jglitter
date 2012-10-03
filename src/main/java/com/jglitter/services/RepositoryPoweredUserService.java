@@ -29,6 +29,7 @@ public class RepositoryPoweredUserService implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(String userId) {
         DbUser dbUser = userRepo.findByUuid(userId);
         userRepo.delete(dbUser);

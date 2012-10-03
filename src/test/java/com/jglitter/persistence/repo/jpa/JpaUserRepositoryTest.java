@@ -69,4 +69,15 @@ public class JpaUserRepositoryTest extends AbstractTransactionalTestNGSpringCont
         }
     }
 
+    @Test
+    public void canDeleteUser() {
+        final DbUser johnDoe = userRepository.persist(new DbUser("john@doe.com", "John Doe"));
+        assertNotNull(johnDoe.getId(), "Newly persisted user did not have primary key.");
+
+        userRepository.delete(johnDoe);
+        DbUser dbuser = userRepository.findByUuid(johnDoe.getUuid());
+        assertNull(dbuser, "User did not get deleted");
+        
+    }
+
 }
