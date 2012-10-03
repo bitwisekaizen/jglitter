@@ -21,6 +21,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Collection;
+import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -57,6 +58,10 @@ public class JGlitterRestTests extends AbstractTests {
         restTemplate.delete(wsRoot() + "/user/" + id);
     }
 
+    private User createUser(String username) {
+        return createUser( username+"@example.com", username);
+    }
+
     private User createUser(String email, String username) {
         User aUser = restTemplate.postForEntity(wsRoot() + "/user", new User(email, username), User.class).getBody();
         assertNotNull(aUser, "Create user failed " + username);
@@ -70,7 +75,7 @@ public class JGlitterRestTests extends AbstractTests {
     @Test
     void userCanAuthorATweet() {
         User author = follower;
-        Tweet tweet = restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, "This is my first tweet!"), Tweet.class).getBody();
+        Tweet tweet = createTweet(author, "This is my first tweet!");
         Tweets tweets = getTweetsForUser(author);
         assertTrue(tweets.contains(tweet), "All tweets by the author includes the new tweet.");
         deleteUser(author.getId());
@@ -78,11 +83,15 @@ public class JGlitterRestTests extends AbstractTests {
         assertEquals(tweetsAfterDelete.getTweets().size(), 0, "Tweets where not deleted with user");
     }
 
+    private Tweet createTweet(User author, String message) {
+        return restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, message), Tweet.class).getBody();
+    }
+
     @Test
     void unknownUserCannotAuthorATweet() {
         User unknownAuthor = new User("sneaky@bastard.com", "sneaky");
         try {
-            restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(unknownAuthor, "This is my first tweet!"), Tweet.class).getBody();
+            createTweet(unknownAuthor, "This is my first tweet!");
             fail("Should have failed posting a tweet by an unknown author.");
         } catch (HttpClientErrorException exception) {
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode(), "Error code wasn't NOT_FOUND");
@@ -100,6 +109,31 @@ public class JGlitterRestTests extends AbstractTests {
         assertTrue(followees.contains(userToFollow1), "Expected followee not found");
     }
 
+    @Test
+    void canReadTweetsOfFollowees() {
+        User follower    = createUser("follower");
+        User followee1   = createUser("followee1");
+        User followee2   = createUser("followee2");
+        User nonfollowee = createUser("nonfollowee");
+        followUser(follower, followee1);
+        followUser(follower, followee2);
+
+        Tweet followerTweet    = createTweet(follower   , "tweet by follower");
+        Tweet followee1Tweet   = createTweet(followee1  , "tweet by followee1");
+        Tweet followee2Tweet   = createTweet(followee2  , "tweet by followee2");
+        Tweet nonfolloweeTweet = createTweet(nonfollowee, "tweet by nonfollowee");
+
+        Tweets tweets = getUserFeed(follower);
+
+        assertEquals( tweets.getTweets().size(), 2 );
+        assertTrue( tweets.contains(followee1Tweet) );
+        assertTrue( tweets.contains(followee2Tweet) );
+    }
+
+    private Tweets getUserFeed(User aUser) {
+        return restTemplate.getForEntity(wsRoot() + "/feed/" + aUser.getId(), Tweets.class).getBody();
+    }
+
     private Users getFollowees(User aUser) {
         return restTemplate.getForEntity(wsRoot() + "/followees/" + aUser.getId(), Users.class).getBody();
     }
@@ -112,4 +146,5 @@ public class JGlitterRestTests extends AbstractTests {
         // putting this here now because I removed the URL helper class
         return "http://localhost:8080/jglitter/ws";
     }
+
 }
