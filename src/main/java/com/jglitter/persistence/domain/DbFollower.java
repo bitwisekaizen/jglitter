@@ -1,12 +1,24 @@
 package com.jglitter.persistence.domain;
 
-public class DbFollower {
-    private Object id;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@Entity
+public class DbFollower extends HasPrimaryKey {
+
+    @ManyToOne
+    private DbUser follower;
+
+    @ManyToOne
+    private DbUser followee;
 
     public DbFollower(DbUser follower, DbUser followee) {
+        this();
+        this.follower = follower;
+        this.followee = followee;
     }
 
-    public Object getId() {
-        return id;
+    /** Necessary for persistence framework. */
+    protected DbFollower() {
     }
 }

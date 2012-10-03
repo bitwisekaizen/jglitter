@@ -5,7 +5,7 @@
 
     <changeSet id="001-add-user-table" author="BradGavinPair">
         <createTable tableName="dbuser">
-            <column name="id" type="integer" autoIncrement="true" >
+            <column name="id" type="integer" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="email" type="varchar(100)">
@@ -41,8 +41,28 @@
     <changeSet id="004-add-user-uuid-column" author="Brad">
         <addColumn tableName="dbuser">
             <column name="uuid" type="varchar(50)">
-                <constraints nullable="false" />
+                <constraints nullable="false"/>
             </column>
         </addColumn>
+    </changeSet>
+
+    <changeSet id="005-add-follower-table" author="Brad">
+        <createTable tableName="dbfollower">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="follower_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="followee_id" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="dbfollower" baseColumnNames="follower_id"
+                                 referencedTableName="dbuser" referencedColumnNames="id"
+                                 constraintName="FK_follower_user_1"/>
+        <addForeignKeyConstraint baseTableName="dbfollower" baseColumnNames="followee_id"
+                                 referencedTableName="dbuser" referencedColumnNames="id"
+                                 constraintName="FK_follower_user_2"/>
     </changeSet>
 </databaseChangeLog>

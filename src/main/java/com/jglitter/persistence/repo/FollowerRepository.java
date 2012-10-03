@@ -5,5 +5,5 @@ import com.jglitter.persistence.domain.DbFollower;
 public interface FollowerRepository {
     DbFollower persist(DbFollower dbFollower);
 
-    DbFollower findById();
+    DbFollower findById(final Integer id);
 }
