@@ -65,9 +65,8 @@ public class JGlitterRestTests extends AbstractTests {
         followUser(aUser, userToFollow);
 
         Users followees = getFollowees(aUser);
-        Collection<User> followeesList = followees.getUsers();
-        assertEquals(1, followeesList.size());
-        assertTrue(followees.contains(userToFollow));
+        assertEquals(1, followees.getUsers().size());
+        assertTrue(followees.contains(userToFollow), "Expected followee not found");
     }
 
     private Users getFollowees(User aUser) {
