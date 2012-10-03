@@ -31,7 +31,7 @@ public class RepositoryPoweredTweetService implements TweetService {
 
     @Transactional
     public Tweet create(final Tweet tweet) {
-        final DbUser author = userRepo.findByUuid(tweet.getAuthor().getId());
+        final DbUser author = userRepo.findByEmail(tweet.getAuthor().getId());
         if (author == null) {
             throw new UserNotFoundException(tweet.getAuthor().getId());
         }
@@ -41,7 +41,7 @@ public class RepositoryPoweredTweetService implements TweetService {
 
     @Transactional(readOnly = true)
     public Tweets findAllBy(final User author) {
-        final DbUser user = userRepo.findByUuid(author.getId());
+        final DbUser user = userRepo.findByEmail(author.getId());
         final Collection<DbTweet> allByAuthor = tweetRepo.findAllByAuthor(user);
         final Tweets tweets = new Tweets();
         for (DbTweet eachTweet : allByAuthor) {

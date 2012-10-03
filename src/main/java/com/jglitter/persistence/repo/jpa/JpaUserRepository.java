@@ -30,7 +30,7 @@ public class JpaUserRepository implements UserRepository {
         return em.createQuery("select d from DbUser d", DbUser.class).getResultList();
     }
 
-    public DbUser findByUuid(final String id) {
+    public DbUser findByEmail(final String id) {
         final TypedQuery<DbUser> query = em.createQuery("select d from DbUser d where d.uuid = :user_uuid", DbUser.class);
         final List<DbUser> users = query.setParameter("user_uuid", id).getResultList();
         return users.isEmpty() ? null : users.get(0);

@@ -31,7 +31,7 @@ public class RepositoryPoweredUserService implements UserService {
     @Override
     @Transactional
     public void deleteUser(String userId) {
-        DbUser dbUser = userRepo.findByUuid(userId);
+        DbUser dbUser = userRepo.findByEmail(userId);
         userRepo.delete(dbUser);
     }
 
@@ -46,6 +46,6 @@ public class RepositoryPoweredUserService implements UserService {
     }
 
     public User findById(final String userId) {
-        return new User(userRepo.findByUuid(userId));
+        return new User(userRepo.findByEmail(userId));
     }
 }

@@ -31,13 +31,13 @@ public class RepositoryPoweredFollowerService implements FollowerService {
 
     @Transactional
     public void createFollower(User follower, User followee) {
-        DbUser dbFollower = userRepo.findByUuid(follower.getId());
-        DbUser dbFollowee = userRepo.findByUuid(followee.getId());
+        DbUser dbFollower = userRepo.findByEmail(follower.getId());
+        DbUser dbFollowee = userRepo.findByEmail(followee.getId());
         followerRep.persist(new DbFollower(dbFollower, dbFollowee));
     }
 
     public Users findFollowees(User follower) {
-        DbUser dbFollower = userRepo.findByUuid(follower.getId());
+        DbUser dbFollower = userRepo.findByEmail(follower.getId());
 
         Users users = new Users();
         List<DbUser> followees = followerRep.findFollowees(dbFollower);
