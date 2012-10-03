@@ -63,6 +63,14 @@ public class UserController {
         return followerService.findFollowees(follower);
     }
 
+    @RequestMapping(value = "/followers/{followeeId}", method = RequestMethod.GET)
+    public Users getFollowers(@PathVariable String followeeId) {
+        Users users = new Users();
+        users.add(new User("foo@example.com", "bar"));
+        users.add(new User("foo1@example.com", "bar"));
+        return users;
+    }
+
     /**
      * Handle exceptions by returning an appropriate HttpStatus code and reason
      */

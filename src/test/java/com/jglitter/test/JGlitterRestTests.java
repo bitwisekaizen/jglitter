@@ -29,17 +29,20 @@ public class JGlitterRestTests extends AbstractTests {
     @Autowired
     private RestTemplate restTemplate;
     private User follower;
+    private User secondFollower;
     private User userToFollow;
 
     @BeforeMethod
     void setup() {
         follower = createUser("gavin@vmware.com", "Gavin Gray");
+        secondFollower = createUser("secondFollower@follow.com", "Follower2");
         userToFollow = createUser("brad@vmware.com", "Brad");
     }
 
     @AfterMethod(alwaysRun = true)
     void teardown() {
         deleteUser(follower.getId());
+        deleteUser(secondFollower.getId());
         deleteUser(userToFollow.getId());
     }
 
@@ -139,6 +142,24 @@ public class JGlitterRestTests extends AbstractTests {
 
     private Tweets getUserFeed(User aUser) {
         return restTemplate.getForEntity(wsRoot() + "/user/" + aUser.getId() + "/feed", Tweets.class).getBody();
+    }
+
+    @Test(enabled = false)
+    void canFindFollowersOfUser() {
+        User follower1 = createUser("iliketo1@follow.com", "Follower1");
+        User follower2= createUser("ilike2@follow.com", "Follower2");
+        User userToFollow1 = createUser("ilike2be@followed.com", "Followee2");
+        Users followers = getFollowersOfUser(userToFollow1);
+        int numFollowersBefore = followers.size();
+        followUser(follower1, userToFollow1);
+        followUser(follower2, userToFollow1);
+        followers = getFollowersOfUser(userToFollow1);
+        int numFollowersAfter = followers.size();
+        assertEquals(numFollowersAfter, numFollowersBefore + 2, "Failed to confirm 2 followers added");
+    }
+
+    private Users getFollowersOfUser(User aUser) {
+        return restTemplate.getForEntity(wsRoot() + "/followers/" + aUser.getId(), Users.class).getBody();
     }
 
     private Users getFollowees(User aUser) {

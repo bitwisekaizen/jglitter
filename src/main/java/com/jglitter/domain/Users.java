@@ -33,4 +33,8 @@ public class Users {
     public void setUsers(final Collection<User> users) {
         this.users = users;
     }
+
+    public int size() {
+        return users.size();
+    }
 }
