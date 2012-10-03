@@ -31,11 +31,14 @@ public class UserController {
     public @ResponseBody
     void addUserToFollow(@PathVariable String followerId, @PathVariable String userToFollowId) {
 
+
     }
 
     @RequestMapping(value = "/followees/{followerId}", method = RequestMethod.GET)
     public Users getFollowees(@PathVariable String followerId) {
-        return new Users();
+        Users users = new Users();
+        users.add(new User("brad@vmware.com", "brad"));
+        return users;
     }
 
 
