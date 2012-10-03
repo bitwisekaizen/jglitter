@@ -33,7 +33,7 @@ public class JGlitterRestTests extends AbstractTests {
         User johnDoe = createUser("john@doe.com", "John Doe");
         Users allUsers = restTemplate.getForEntity(wsRoot() + "/user", Users.class).getBody();
         assertTrue(allUsers.contains(johnDoe), "All users didn't include newly added user.");
-        //deleteUser(johnDoe.getId());
+        deleteUser(johnDoe.getId());
     }
 
     private void deleteUser(String id) {
