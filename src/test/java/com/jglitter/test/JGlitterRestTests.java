@@ -63,12 +63,19 @@ public class JGlitterRestTests extends AbstractTests {
         return aUser;
     }
 
+    private Tweets getTweetsForUser(User user) {
+        return restTemplate.getForEntity(wsRoot() + "/user/" + user.getId() + "/tweets", Tweets.class).getBody();
+    }
+
     @Test
     void userCanAuthorATweet() {
-        User author = restTemplate.postForEntity(wsRoot() + "/user", new User("auth@or.com", "JohnDoe"), User.class).getBody();
+        User author = follower;
         Tweet tweet = restTemplate.postForEntity(wsRoot() + "/tweet", new Tweet(author, "This is my first tweet!"), Tweet.class).getBody();
-        Tweets tweets = restTemplate.getForEntity(wsRoot() + "/user/" + author.getId() + "/tweets", Tweets.class).getBody();
+        Tweets tweets = getTweetsForUser(author);
         assertTrue(tweets.contains(tweet), "All tweets by the author includes the new tweet.");
+        deleteUser(author.getId());
+        Tweets tweetsAfterDelete = getTweetsForUser(author);
+        assertEquals(tweetsAfterDelete.getTweets().size(), 0, "Tweets where not deleted with user");
     }
 
     @Test
