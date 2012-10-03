@@ -16,8 +16,9 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.Test;
 
+import java.util.Collection;
+
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
@@ -29,9 +30,13 @@ public class JGlitterRestTests extends AbstractTests {
 
     @Test
     void canCreateAUser() {
-        User johnDoe = restTemplate.postForEntity(wsRoot() + "/user", new User("john@doe.com", "JohnDoe"), User.class).getBody();
+        User johnDoe = createUser("john@doe.com", "John Doe");
         Users allUsers = restTemplate.getForEntity(wsRoot() + "/user", Users.class).getBody();
         assertTrue(allUsers.contains(johnDoe), "All users didn't include newly added user.");
+    }
+
+    private User createUser(String email, String username) {
+        return restTemplate.postForEntity(wsRoot() + "/user", new User(email, username), User.class).getBody();
     }
 
     @Test
@@ -51,6 +56,26 @@ public class JGlitterRestTests extends AbstractTests {
         } catch (HttpClientErrorException exception) {
             assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode(), "Error code wasn't NOT_FOUND");
         }
+    }
+
+    @Test
+    void canFollowAnotherUser() {
+        User aUser = createUser("gavin@vmware.com", "Gavin Gray");
+        User userToFollow = createUser("brad@vmware.com", "Brad");
+        followUser(aUser, userToFollow);
+
+        Users followees = getFollowees(aUser);
+        Collection<User> followeesList = followees.getUsers();
+        assertEquals(1, followeesList.size());
+        assertTrue(followees.contains(userToFollow));
+    }
+
+    private Users getFollowees(User aUser) {
+        return restTemplate.getForEntity(wsRoot() + "/followees/" + aUser.getId(), Users.class).getBody();
+    }
+
+    private void followUser(User aUser, User userToFollow) {
+        restTemplate.postForEntity(wsRoot() + "/followers/" + aUser.getId() + "/" + userToFollow.getId(), null, null);
     }
 
     private String wsRoot() {
