@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -39,6 +40,11 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public Users getUsers() {
         return userService.findAllUsers();
+    }
+
+    @RequestMapping(value = "/findUser", method = RequestMethod.GET)
+    public User findUser(@RequestParam String email) {
+        return new User("moo", "moo");
     }
 
     @RequestMapping(value = "/followers/{followerId}/{userToFollowId}", method = RequestMethod.POST)

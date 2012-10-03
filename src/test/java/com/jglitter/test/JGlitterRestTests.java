@@ -10,18 +10,13 @@ import com.jglitter.domain.Tweet;
 import com.jglitter.domain.Tweets;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
-import liquibase.precondition.Precondition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import java.util.Collection;
-import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -46,6 +41,18 @@ public class JGlitterRestTests extends AbstractTests {
     void teardown() {
         deleteUser(follower.getId());
         deleteUser(userToFollow.getId());
+    }
+
+    @Test
+    void canFindUserByEmail() {
+        String emailToFind = follower.getEmail();
+
+        User foundUser = findUserByEmail(emailToFind);
+        assertNotNull(foundUser);
+    }
+
+    private User findUserByEmail(String email) {
+        return restTemplate.getForEntity(wsRoot() + "/findUser?email=" + email, User.class).getBody();
     }
 
     @Test
