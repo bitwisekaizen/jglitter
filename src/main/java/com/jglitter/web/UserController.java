@@ -1,10 +1,14 @@
 package com.jglitter.web;
 
+import com.google.common.base.Preconditions;
 import com.jglitter.domain.User;
 import com.jglitter.domain.Users;
 import com.jglitter.services.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
+
+    Logger logger = Logger.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
@@ -46,5 +52,16 @@ public class UserController {
         return users;
     }
 
+    /**
+     * Handle exceptions by returning an appropriate HttpStatus code and reason
+     */
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public void handleException(final Exception e) {
+
+        Preconditions.checkNotNull(e);
+
+        logger.error("Unhandled exception: ", e);
+    }
 
 }
