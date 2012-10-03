@@ -138,7 +138,7 @@ public class JGlitterRestTests extends AbstractTests {
     }
 
     private Tweets getUserFeed(User aUser) {
-        return restTemplate.getForEntity(wsRoot() + "/feed/" + aUser.getId(), Tweets.class).getBody();
+        return restTemplate.getForEntity(wsRoot() + "/user/" + aUser.getId() + "/feed", Tweets.class).getBody();
     }
 
     private Users getFollowees(User aUser) {

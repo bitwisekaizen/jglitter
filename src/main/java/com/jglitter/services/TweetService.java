@@ -15,4 +15,6 @@ public interface TweetService {
     Tweet create(Tweet tweet);
 
     Tweets findAllBy(User author);
+
+    Tweets findAllForFollower(User user);
 }

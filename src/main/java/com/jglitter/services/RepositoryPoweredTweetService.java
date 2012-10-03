@@ -49,4 +49,9 @@ public class RepositoryPoweredTweetService implements TweetService {
         }
         return tweets;
     }
+
+    @Transactional(readOnly = true)
+    public Tweets findAllForFollower(User user) {
+        return new Tweets();
+    }
 }

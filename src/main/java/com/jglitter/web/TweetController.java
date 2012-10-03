@@ -41,4 +41,13 @@ public class TweetController {
         }
         return tweetService.findAllBy(user);
     }
+
+    @RequestMapping(value = "/user/{followerId}/feed", method = RequestMethod.GET)
+    public Tweets getUserFeed(@PathVariable String followerId) {
+        final User user = userService.findById(followerId);
+        if (user == null) {
+            throw new UserNotFoundException(followerId);
+        }
+        return tweetService.findAllForFollower(user);
+    }
 }
